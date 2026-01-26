@@ -1,0 +1,59 @@
+@import "tailwindcss";
+
+html {
+  scroll-behavior: smooth;
+}
+#top,
+#overview,
+#feature {
+  scroll-margin-top: 10vh;
+}
+
+.modal-slideIn {
+  animation: slideIn 500ms ease-in-out forwards;
+}
+
+.modal-slideOut {
+  animation: slideOut 500ms ease-in-out forwards;
+}
+
+@keyframes slideIn {
+  from {
+    transform: translateX(100%);
+  }
+  to {
+    transform: translateX(0);
+  }
+}
+@keyframes slideOut {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(100%);
+  }
+}
+
+@keyframes popIn {
+  0% {
+    opacity: 0%;
+    transform: translateY(10px) scale(0.95);
+  }
+  100% {
+    opacity: 100%;
+    transform: translateY(0) scale(1);
+  }
+}
+.card-pop-in {
+  animation: popIn 0.3s ease-out forwards;
+}
+.custom-scrollbar::-webkit-scrollbar {
+  width: 4px;
+}
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: transparent;
+}
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background: #4b5563; /* neutral-600 */
+  border-radius: 10px;
+}
