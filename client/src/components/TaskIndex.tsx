@@ -56,7 +56,7 @@ const TaskIndex = () => {
   }, [errorTaskMsg, setErrorTaskMsg]);
   useBodyScrollLock(isSidebarOpen);
   return (
-    <div className="relative">
+    <div className="relative overflow-hidden">
       {!currentUser && !successMessage && (
         <div
           style={{ backgroundColor: "rgba(0,0,0,0.7)" }}
