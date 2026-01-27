@@ -1,3 +1,4 @@
+// for tasks
 export type Calendar = {
   _id: string;
   title: string;
@@ -153,4 +154,94 @@ export type TaskStore = {
   }: AddTaskProps & { _id: string }) => Promise<EditTaskRes>;
   archiveTask: (_id: string) => Promise<EditTaskRes>;
   deleteTask: (_id: string) => Promise<DeleteTaskRes>;
+};
+
+//for auth
+type UserProps = {
+  _id: string;
+  email: string;
+  fName: string;
+  lName: string;
+};
+
+type fetchUserProps = {
+  message: string;
+  user: {
+    fName: string;
+    lName: string;
+  };
+};
+
+export type UpdateUserProps = {
+  _id: string;
+  fName: string;
+  lName: string;
+};
+
+export type ChangePasswordProps = {
+  _id: string;
+  oldPassword: string;
+  newPassword: string;
+};
+
+type CurrentUserProps = {
+  message: string;
+  token: string;
+  user: UserProps;
+};
+
+type ResetPasswordProps = {
+  message: string;
+};
+
+export type FetchResetPwdProps = { _id: string; token: string };
+
+type ResFetchResetPwdProps = {
+  message: string;
+  email: string;
+};3
+export type ResetPwdProps = { newPassword: string } & FetchResetPwdProps;
+
+export type AuthStore = {
+  currentUser: CurrentUserProps | null;
+  successMessage: string | null;
+  setSuccessMessage: (message: string | null) => void;
+  errorMessage: string | null;
+  setErrorMessage: (message: string | null) => void;
+  register: (data: RegisterData) => Promise<void>;
+  login: (data: LoginData) => Promise<void>;
+  logout: () => void;
+  fetchUserData: (_id: string) => Promise<fetchUserProps>;
+  updateUserData: ({
+    _id,
+    fName,
+    lName,
+  }: UpdateUserProps) => Promise<fetchUserProps>;
+  changePassword: ({
+    _id,
+    oldPassword,
+    newPassword,
+  }: ChangePasswordProps) => Promise<fetchUserProps>;
+  forgotPassword: (email: string) => Promise<ResetPasswordProps>;
+  fetchResetPwd: ({
+    _id,
+    token,
+  }: FetchResetPwdProps) => Promise<ResFetchResetPwdProps>;
+  resetPassword: ({
+    _id,
+    token,
+    newPassword,
+  }: ResetPwdProps) => Promise<ResetPasswordProps>;
+};
+
+export type RegisterData = {
+  fName: string;
+  lName: string;
+  email: string;
+  password: string;
+};
+
+export type LoginData = {
+  email: string;
+  password: string;
 };

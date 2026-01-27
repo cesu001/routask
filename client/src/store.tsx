@@ -7,96 +7,16 @@ import {
   type SortOrder,
   type TaskStore,
   type AddTaskProps,
+  type AuthStore,
+  type RegisterData,
+  type LoginData,
+  type UpdateUserProps,
+  type ChangePasswordProps,
+  type FetchResetPwdProps,
+  type ResetPwdProps,
 } from "../types";
 
-type UserProps = {
-  _id: string;
-  email: string;
-  fName: string;
-  lName: string;
-};
 
-type fetchUserProps = {
-  message: string;
-  user: {
-    fName: string;
-    lName: string;
-  };
-};
-
-type UpdateUserProps = {
-  _id: string;
-  fName: string;
-  lName: string;
-};
-
-type ChangePasswordProps = {
-  _id: string;
-  oldPassword: string;
-  newPassword: string;
-};
-
-type CurrentUserProps = {
-  message: string;
-  token: string;
-  user: UserProps;
-};
-
-type ResetPasswordProps = {
-  message: string;
-};
-
-type FetchResetPwdProps = { _id: string; token: string };
-
-type ResFetchResetPwdProps = {
-  message: string;
-  email: string;
-};
-type ResetPwdProps = { newPassword: string } & FetchResetPwdProps;
-
-type AuthStore = {
-  currentUser: CurrentUserProps | null;
-  successMessage: string | null;
-  setSuccessMessage: (message: string | null) => void;
-  errorMessage: string | null;
-  setErrorMessage: (message: string | null) => void;
-  register: (data: RegisterData) => Promise<void>;
-  login: (data: LoginData) => Promise<void>;
-  logout: () => void;
-  fetchUserData: (_id: string) => Promise<fetchUserProps>;
-  updateUserData: ({
-    _id,
-    fName,
-    lName,
-  }: UpdateUserProps) => Promise<fetchUserProps>;
-  changePassword: ({
-    _id,
-    oldPassword,
-    newPassword,
-  }: ChangePasswordProps) => Promise<fetchUserProps>;
-  forgotPassword: (email: string) => Promise<ResetPasswordProps>;
-  fetchResetPwd: ({
-    _id,
-    token,
-  }: FetchResetPwdProps) => Promise<ResFetchResetPwdProps>;
-  resetPassword: ({
-    _id,
-    token,
-    newPassword,
-  }: ResetPwdProps) => Promise<ResetPasswordProps>;
-};
-
-type RegisterData = {
-  fName: string;
-  lName: string;
-  email: string;
-  password: string;
-};
-
-type LoginData = {
-  email: string;
-  password: string;
-};
 export const useAuthStore = create<AuthStore>((set) => ({
   currentUser: null,
   successMessage: null,
