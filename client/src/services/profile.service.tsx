@@ -1,17 +1,6 @@
 import axios from "axios";
+import type { ChangePasswordProps, UpdateUserProps } from "../../types";
 const API_URL = "http://localhost:8080/api/profile";
-
-type UpdateUserProps = {
-  _id: string;
-  fName: string;
-  lName: string;
-};
-
-type ChangePasswordProps = {
-  _id: string;
-  oldPassword: string;
-  newPassword: string;
-};
 
 class ProfileService {
   fetchUserData(_id: string) {
