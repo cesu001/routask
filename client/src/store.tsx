@@ -15,10 +15,20 @@ import {
   type FetchResetPwdProps,
   type ResetPwdProps,
 } from "../types";
+import axios, { AxiosError } from "axios";
 
+const handleAuthStoreError = (err: unknown, set: (state: any) => void) => {
+  if (axios.isAxiosError(err)) {
+    const serverError = err as AxiosError<string>;
+    const message = serverError.response?.data || "Server connectivity issue.";
+    set({ errorMessage: message });
+  } else {
+    set({ errorMessage: "An unexpected error occurred." });
+  }
+};
 
 export const useAuthStore = create<AuthStore>((set) => ({
-  currentUser: null,
+  currentUser: AuthService.getCurrentUser(),
   successMessage: null,
   setSuccessMessage: (message) => {
     set({ successMessage: message });
@@ -45,12 +55,11 @@ export const useAuthStore = create<AuthStore>((set) => ({
   login: async ({ email, password }: LoginData) => {
     try {
       let response = await AuthService.login({ email, password });
-      // console.log(response);
       localStorage.setItem("user", JSON.stringify(response.data));
       set({ currentUser: AuthService.getCurrentUser() });
       set({ errorMessage: null });
-    } catch (err: any) {
-      set({ errorMessage: err.response.data });
+    } catch (err: unknown) {
+      handleAuthStoreError(err, set);
       throw err;
     }
   },

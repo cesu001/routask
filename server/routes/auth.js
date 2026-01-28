@@ -64,16 +64,13 @@ router.post("/login", async (req, res) => {
   if (error) {
     return res.status(400).send(error.details[0].message);
   }
-  const foundUser = await User.findOne({ email: req.body.email }).exec();
-  if (!foundUser) {
-    return res.status(400).send("Email or password is incorrect.");
-  }
-  foundUser.comparePassword(req.body.password, (err, isMatch) => {
-    if (err) {
-      return res.status(500).send(err);
+  try {
+    const foundUser = await User.findOne({ email: req.body.email }).exec();
+    if (!foundUser) {
+      return res.status(400).send("Email or password is incorrect.");
     }
+    const isMatch = await foundUser.comparePassword(req.body.password);
     if (isMatch) {
-      // create json web token
       const tokenObject = { _id: foundUser._id, email: foundUser.email };
       const token = jwt.sign(tokenObject, process.env.JWTTOKEN_SECRET);
       return res.send({
@@ -84,7 +81,10 @@ router.post("/login", async (req, res) => {
     } else {
       return res.status(401).send("Email or password is incorrect.");
     }
-  });
+  } catch (err) {
+    console.error(err);
+    return res.status(500).send("Internal server error.");
+  }
 });
 
 router.post("/forgot-password", async (req, res) => {
@@ -102,7 +102,7 @@ router.post("/forgot-password", async (req, res) => {
     const token = jwt.sign(
       { email: foundUser.email, _id: foundUser._id },
       secret,
-      { expiresIn: "5m" }
+      { expiresIn: "5m" },
     );
     const link = `http://localhost:5173/reset-password/${foundUser._id}/${token}`;
     // nodemailer
@@ -176,7 +176,7 @@ router.put("/reset-password/:_id/:token", async (req, res) => {
       let updateUser = await User.findOneAndUpdate(
         { _id },
         { password: newPassword },
-        { new: true, runValidators: true }
+        { new: true, runValidators: true },
       );
       return res.send({
         message: "Password reset successfully.",
