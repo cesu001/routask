@@ -2,30 +2,36 @@ import BackButton from "./BackButton";
 import Footer from "./Footer";
 import LogoBlack from "../assets/routask-high-resolution-logo-grayscale-transparent.png";
 import { MdEmail } from "react-icons/md";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useAuthStore } from "../store";
 import React, { useState, useEffect } from "react";
 
 const ResetPassword = () => {
+  const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [resetMessage, setResetMessage] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
   const [isMailSent, setIsMailSent] = useState(false);
+  const currentUser = useAuthStore((state) => state.currentUser);
   const errorMessage = useAuthStore((state) => state.errorMessage);
+  const setErrorMessage = useAuthStore((state) => state.setErrorMessage);
   const forgotPassword = useAuthStore((state) => state.forgotPassword);
   const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setEmail(e.target.value);
   };
   const handleReset = async (e: React.FormEvent) => {
     e.preventDefault();
+    setIsLoading(true);
     try {
       let response = await forgotPassword(email);
-      // console.log(response);
       if (response) {
         setIsMailSent(!isMailSent);
         setResetMessage(response.message);
       }
-    } catch (e) {
-      console.log(e);
+    } catch (err: unknown) {
+      console.error("ResetPassword component caught error:", err);
+    } finally {
+      setIsLoading(false);
     }
   };
   const handleMailSentToggle = () => {
@@ -33,20 +39,25 @@ const ResetPassword = () => {
   };
   // console.log(errorMessage);
   const errorMessageToggle = () => {
-    useAuthStore.setState({ errorMessage: null });
+    setErrorMessage(null);
   };
 
   useEffect(() => {
+    if (!errorMessage) return;
     if (errorMessage?.includes("empty")) {
-      useAuthStore.setState({
-        errorMessage: "Email is not allowed to be empty.",
-      });
+      setErrorMessage("Email is not allowed to be empty.");
     } else if (errorMessage?.includes("valid")) {
-      useAuthStore.setState({
-        errorMessage: "Email must be a valid email.",
-      });
+      setErrorMessage("Email must be a valid email.");
     }
-  }, [errorMessage]);
+  }, [errorMessage, setErrorMessage]);
+  useEffect(() => {
+    if (currentUser) {
+      navigate("/", { replace: true });
+    }
+  }, [currentUser, navigate]);
+  if (currentUser) {
+    return <div className="h-screen bg-gray-100"></div>;
+  }
   return (
     <div>
       {isMailSent && (
@@ -106,9 +117,11 @@ const ResetPassword = () => {
           <div className="h-60 flex flex-col items-center gap-6">
             <button
               type="submit"
-              className="w-1/3 px-4 py-2 text-2xl font-bold border-2 border-teal-600 rounded-xl hover:cursor-pointer hover:bg-teal-600 hover:text-white transition-colors duration-300"
+              disabled={isLoading}
+              className={`w-1/3 px-4 py-2 text-2xl font-bold border-2 border-teal-600 rounded-xl transition-colors duration-300 
+                ${isLoading ? "opacity-50 cursor-not-allowed" : "hover:bg-teal-600 hover:text-white hover:cursor-pointer"}`}
             >
-              Reset
+              {isLoading ? "Sending..." : "Reset"}
             </button>
             <div className="w-120 flex flex-col justify-center items-center gap-3">
               <p>

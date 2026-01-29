@@ -42,8 +42,8 @@ const Register = () => {
     }
     try {
       await register({ fName, lName, email, password });
-    } catch (e: any) {
-      console.log(e);
+    } catch (err: unknown) {
+      console.error("Register component caught error:", err);
     }
   };
   const successMessageToggle = () => {
@@ -64,26 +64,16 @@ const Register = () => {
       setErrorMessage("Password length must be at least 6 characters long.");
     }
   }, [errorMessage]);
+  useEffect(() => {
+    if (currentUser) {
+      navigate("/index", { replace: true });
+    }
+  }, [currentUser, navigate]);
+  if (currentUser) {
+    return <div className="h-screen bg-gray-100"></div>;
+  }
   return (
     <div>
-      {currentUser && (
-        <div
-          style={{ backgroundColor: "rgba(0,0,0,0.7)" }}
-          className="fixed inset-0 flex justify-center items-center z-10"
-        >
-          <div className="w-128 bg-white p-10 rounded-lg shadow-lg text-center">
-            <h2 className="text-2xl font-bold mb-4">
-              You are already logged in.
-            </h2>
-            <button
-              onClick={() => navigate("/index")}
-              className="mt-4 px-4 py-2 bg-teal-600 text-white rounded hover:bg-teal-400"
-            >
-              Go to Task Index
-            </button>
-          </div>
-        </div>
-      )}
       <BackButton />
       {successMessage && (
         <div

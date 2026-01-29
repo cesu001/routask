@@ -19,6 +19,7 @@ const ResetPasswordNew = () => {
   const [newPassword, setNewPassword] = useState("");
   const [checkNewPassword, setCheckNewPassword] = useState("");
   const [pwdChangeMsg, setPwdChangeMsg] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
   const [isPwdChange, setIsPwdChange] = useState(false);
   const handleNewPasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setNewPassword(e.target.value);
@@ -39,6 +40,7 @@ const ResetPasswordNew = () => {
       setErrorMessage("New passwords do not match.");
       return;
     }
+    setIsLoading(true);
     try {
       if (_id && token) {
         let response = await resetPassword({ _id, token, newPassword });
@@ -47,8 +49,10 @@ const ResetPasswordNew = () => {
           setIsPwdChange(!isPwdChange);
         }
       }
-    } catch (e) {
-      console.log(e);
+    } catch (err: unknown) {
+      console.error("ResetPasswordNew Component caught error:", err);
+    } finally {
+      setIsLoading(false);
     }
   };
   const handleRedirect = () => {
@@ -61,13 +65,13 @@ const ResetPasswordNew = () => {
     if (_id && token) {
       fetchResetPwd({ _id, token })
         .then((data) => {
-          setEmail(data.email);
+          if (data?.email) setEmail(data.email);
         })
-        .catch((e) => {
-          console.log(e);
+        .catch((err: unknown) => {
+          console.error("Fetch failed.", err);
         });
     }
-  }, [_id, token, fetchResetPwd]);
+  }, [_id, token, fetchResetPwd, setEmail]);
   useEffect(() => {
     if (errorMessage?.includes("newPassword")) {
       setErrorMessage(
@@ -78,7 +82,7 @@ const ResetPasswordNew = () => {
     if (errorMessage?.includes("Not verified.")) {
       setErrorMessage("User not found.");
     }
-  }, [errorMessage]);
+  }, [errorMessage, setErrorMessage]);
   return (
     <div>
       <div>
@@ -185,9 +189,11 @@ const ResetPasswordNew = () => {
             <div className="h-60 flex flex-col items-center gap-6">
               <button
                 type="submit"
-                className="w-1/3 px-4 py-2 text-2xl font-bold border-2 border-teal-600 rounded-xl hover:cursor-pointer hover:bg-teal-600 hover:text-white transition-colors duration-300"
+                disabled={isLoading}
+                className={`w-1/3 px-4 py-2 text-2xl font-bold border-2 border-teal-600 rounded-xl transition-colors duration-300 
+                ${isLoading ? "opacity-50 cursor-not-allowed" : "hover:bg-teal-600 hover:text-white hover:cursor-pointer"}`}
               >
-                Reset
+                {isLoading ? "Resetting..." : "Reset"}
               </button>
               <div className="w-120 flex flex-col justify-center items-center gap-3">
                 <p>

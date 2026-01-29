@@ -47,8 +47,8 @@ export const useAuthStore = create<AuthStore>((set) => ({
       });
       set({ errorMessage: null });
       set({ successMessage: "Registration successful! Please log in." });
-    } catch (err: any) {
-      set({ errorMessage: err.response.data });
+    } catch (err: unknown) {
+      handleAuthStoreError(err, set);
       throw err;
     }
   },
@@ -67,8 +67,8 @@ export const useAuthStore = create<AuthStore>((set) => ({
     try {
       AuthService.logout();
       set({ currentUser: null });
-    } catch (err: any) {
-      set({ errorMessage: err.response.data });
+    } catch (err: unknown) {
+      handleAuthStoreError(err, set);
       throw err;
     }
   },
@@ -76,8 +76,8 @@ export const useAuthStore = create<AuthStore>((set) => ({
     try {
       let response = await ProfileService.fetchUserData(_id);
       return response.data;
-    } catch (err: any) {
-      set({ errorMessage: err.response.data });
+    } catch (err: unknown) {
+      handleAuthStoreError(err, set);
       throw err;
     }
   },
@@ -85,8 +85,8 @@ export const useAuthStore = create<AuthStore>((set) => ({
     try {
       let response = await ProfileService.updateUserData({ _id, fName, lName });
       return response.data;
-    } catch (err: any) {
-      set({ errorMessage: err.response.data });
+    } catch (err: unknown) {
+      handleAuthStoreError(err, set);
       throw err;
     }
   },
@@ -102,8 +102,8 @@ export const useAuthStore = create<AuthStore>((set) => ({
         newPassword,
       });
       return response.data;
-    } catch (err: any) {
-      set({ errorMessage: err.response.data });
+    } catch (err: unknown) {
+      handleAuthStoreError(err, set);
       throw err;
     }
   },
@@ -111,8 +111,8 @@ export const useAuthStore = create<AuthStore>((set) => ({
     try {
       let response = await AuthService.forgotPassword(email);
       return response.data;
-    } catch (err: any) {
-      set({ errorMessage: err.response.data });
+    } catch (err: unknown) {
+      handleAuthStoreError(err, set);
       throw err;
     }
   },
@@ -120,8 +120,8 @@ export const useAuthStore = create<AuthStore>((set) => ({
     try {
       let response = await AuthService.fetchResetPwd({ _id, token });
       return response.data;
-    } catch (err: any) {
-      set({ errorMessage: err.response.data });
+    } catch (err: unknown) {
+      handleAuthStoreError(err, set);
       throw err;
     }
   },
@@ -133,8 +133,8 @@ export const useAuthStore = create<AuthStore>((set) => ({
         newPassword,
       });
       return response.data;
-    } catch (err: any) {
-      set({ errorMessage: err.response.data });
+    } catch (err: unknown) {
+      handleAuthStoreError(err, set);
       throw err;
     }
   },

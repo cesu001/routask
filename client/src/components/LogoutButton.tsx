@@ -4,8 +4,12 @@ const LogoutButton = () => {
   const logout = useAuthStore((state) => state.logout);
   const setSuccessMessage = useAuthStore((state) => state.setSuccessMessage);
   const handleLogout = () => {
-    logout();
-    setSuccessMessage("You have been logged out.");
+    try {
+      logout();
+      setSuccessMessage("You have been logged out.");
+    } catch (err: unknown) {
+      console.error("Logout component caught error:", err);
+    }
   };
   return (
     <div className="h-16 absolute top-0 right-0 p-2 md:p-3">

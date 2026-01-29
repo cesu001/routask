@@ -90,12 +90,10 @@ const Profile = () => {
         setNewPassword("");
         setCheckNewPassword("");
       }
-    } catch (e) {
-      console.log(e);
+    } catch (err: unknown) {
+      console.error("Profile component caught error:", err);
     }
   };
-  // console.log(errorMessage);
-
   // save info
   const handleSaveInfo = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -112,8 +110,8 @@ const Profile = () => {
         });
         setSuccessMessage(response.message);
       }
-    } catch (e) {
-      console.log(e);
+    } catch (err: unknown) {
+      console.error("Profile component caught error:", err);
     }
   };
 
@@ -133,7 +131,6 @@ const Profile = () => {
       );
     }
   }, [errorMessage]);
-
   useEffect(() => {
     if (currentUser) {
       fetchUserData(currentUser?.user._id)
@@ -141,33 +138,23 @@ const Profile = () => {
           setFName(data.user.fName || "");
           setLName(data.user.lName || "");
         })
-        .catch((e) => {
-          console.log(e);
+        .catch((err: unknown) => {
+          console.error("Profile component caught error:", err);
         });
       setEmail(currentUser?.user.email || "");
     }
   }, [currentUser]);
+  useEffect(() => {
+    if (!currentUser) {
+      navigate("/", { replace: true });
+    }
+  }, [currentUser, navigate]);
+  if (!currentUser) {
+    return <div className="h-screen bg-gray-100"></div>;
+  }
   return (
     <div className="min-h-screen">
       <LogoutButton />
-      {!currentUser && !successMessage && (
-        <div
-          style={{ backgroundColor: "rgba(0,0,0,0.7)" }}
-          className="fixed inset-0 flex justify-center items-center z-10"
-        >
-          <div className="w-128 bg-white p-10 rounded-lg shadow-lg text-center">
-            <h2 className="text-2xl font-bold mb-4">
-              You need to be logged in to view this page.
-            </h2>
-            <button
-              onClick={() => navigate("/login")}
-              className="mt-4 px-4 py-2 bg-teal-600 text-white rounded hover:bg-teal-400"
-            >
-              Go to login page.
-            </button>
-          </div>
-        </div>
-      )}
       {isPwdChange && (
         <div
           style={{ backgroundColor: "rgba(0,0,0,0.7)" }}
