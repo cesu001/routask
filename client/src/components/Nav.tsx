@@ -33,7 +33,7 @@ const Nav = () => {
         </button>
       </div>
       <div
-        className={`absolute pt-5 top-24 w-full bg-gray-800 text-white flex flex-col items-center font-semibold text-2xl text-center gap-4 z-10 transition-all ease-in-out duration-500 overflow-hidden
+        className={`absolute pt-5 top-full w-full bg-gray-800 text-white flex flex-col items-center font-semibold text-2xl text-center gap-4 z-10 transition-all ease-in-out duration-500 overflow-hidden
             ${isOpen ? "h-96 opacity-100" : "h-0 opacity-0"}
             `}
       >

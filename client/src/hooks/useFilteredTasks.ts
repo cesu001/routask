@@ -5,7 +5,7 @@ export const useFilteredTasks = (searchQuery: string = "") => {
   const showArchived = useTaskStore((state) => state.showArchived);
   const tasks = useTaskStore((state) => state.tasks);
   const selectedCalendarIDs = useTaskStore(
-    (state) => state.selectedCalendarIDs
+    (state) => state.selectedCalendarIDs,
   );
   const selectedProgress = useTaskStore((state) => state.selectedProgress);
   const selectedPriority = useTaskStore((state) => state.selectedPriority);
@@ -34,5 +34,7 @@ export const useFilteredTasks = (searchQuery: string = "") => {
     searchQuery,
     showArchived,
   ]);
+  // console.log("Total Tasks:", tasks.length);
+  // console.log("Current Filters:", { selectedCalendarIDs, showArchived });
   return filteredTasks;
 };
