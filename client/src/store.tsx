@@ -140,6 +140,16 @@ export const useAuthStore = create<AuthStore>((set) => ({
   },
 }));
 
+const handleTaskStoreError = (err: unknown, set: (state: any) => void) => {
+  if (axios.isAxiosError(err)) {
+    const serverError = err as AxiosError<string>;
+    const message = serverError.response?.data || "Server connectivity issue.";
+    set({ errorTaskMsg: message });
+  } else {
+    set({ errorTaskMsg: "An unexpected error occurred." });
+  }
+};
+
 export const useTaskStore = create<TaskStore>((set) => ({
   successMsg: null,
   errorTaskMsg: null,
@@ -206,8 +216,8 @@ export const useTaskStore = create<TaskStore>((set) => ({
         set({ calendars: [] });
       }
       return response.data;
-    } catch (err: any) {
-      set({ errorTaskMsg: err.response.data });
+    } catch (err: unknown) {
+      handleTaskStoreError(err, set);
       throw err;
     }
   },
@@ -217,8 +227,8 @@ export const useTaskStore = create<TaskStore>((set) => ({
       const newCalendar = response.data.savedCalendar;
       set((state) => ({ calendars: [...state.calendars, newCalendar] }));
       return response.data;
-    } catch (err: any) {
-      set({ errorTaskMsg: err.response.data });
+    } catch (err: unknown) {
+      handleTaskStoreError(err, set);
       throw err;
     }
   },
@@ -231,8 +241,8 @@ export const useTaskStore = create<TaskStore>((set) => ({
         ),
       }));
       return response.data;
-    } catch (err: any) {
-      set({ errorTaskMsg: err.response.data });
+    } catch (err: unknown) {
+      handleTaskStoreError(err, set);
       throw err;
     }
   },
@@ -244,8 +254,8 @@ export const useTaskStore = create<TaskStore>((set) => ({
         tasks: state.tasks.filter((t) => t.calendar !== _id),
       }));
       return response.data;
-    } catch (err: any) {
-      set({ errorTaskMsg: err.response.data });
+    } catch (err: unknown) {
+      handleTaskStoreError(err, set);
       throw err;
     }
   },
@@ -259,8 +269,8 @@ export const useTaskStore = create<TaskStore>((set) => ({
         set({ tasks: [] });
       }
       return response.data;
-    } catch (err: any) {
-      set({ errorTaskMsg: err.response.data });
+    } catch (err: unknown) {
+      handleTaskStoreError(err, set);
       throw err;
     }
   },
@@ -290,8 +300,8 @@ export const useTaskStore = create<TaskStore>((set) => ({
       const newTask = response.data.savedTask;
       set((state) => ({ tasks: [...state.tasks, newTask] }));
       return response.data;
-    } catch (err: any) {
-      set({ errorTaskMsg: err.response.data });
+    } catch (err: unknown) {
+      handleTaskStoreError(err, set);
       throw err;
     }
   },
@@ -325,8 +335,8 @@ export const useTaskStore = create<TaskStore>((set) => ({
         tasks: state.tasks.map((t) => (t._id === _id ? updatedTask : t)),
       }));
       return response.data;
-    } catch (err: any) {
-      set({ errorTaskMsg: err.response.data });
+    } catch (err: unknown) {
+      handleTaskStoreError(err, set);
       throw err;
     }
   },
@@ -338,8 +348,8 @@ export const useTaskStore = create<TaskStore>((set) => ({
         tasks: state.tasks.map((t) => (t._id === _id ? updatedTask : t)),
       }));
       return response.data;
-    } catch (err: any) {
-      set({ errorTaskMsg: err.response.data });
+    } catch (err: unknown) {
+      handleTaskStoreError(err, set);
       throw err;
     }
   },
@@ -350,8 +360,8 @@ export const useTaskStore = create<TaskStore>((set) => ({
         tasks: state.tasks.filter((t) => t._id !== _id),
       }));
       return response.data;
-    } catch (err: any) {
-      set({ errorTaskMsg: err.response.data });
+    } catch (err: unknown) {
+      handleTaskStoreError(err, set);
       throw err;
     }
   },

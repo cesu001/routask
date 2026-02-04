@@ -33,15 +33,15 @@ const TaskIndex = () => {
         .then((data) => {
           console.log(data.message);
         })
-        .catch((e) => {
-          console.log(e);
+        .catch((err) => {
+          console.error("TaskIndex component caught error:", err);
         });
       fetchTasks()
         .then((data) => {
           console.log(data.message);
         })
-        .catch((e) => {
-          console.log(e);
+        .catch((err) => {
+          console.error("TaskIndex component caught error:", err);
         });
     }
   }, [currentUser, fetchCalendarData, fetchTasks]);

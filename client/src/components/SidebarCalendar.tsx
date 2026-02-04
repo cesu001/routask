@@ -9,27 +9,15 @@ import { IoMdSwap } from "react-icons/io";
 import { FaAngleUp, FaAngleDown } from "react-icons/fa";
 
 const SidebarCalendar = () => {
-  const calendars = useTaskStore((state) => {
-    return state.calendars;
-  });
-  const calendarSortOrder = useTaskStore((state) => {
-    return state.calendarSortOrder;
-  });
-  const toggleCalendarSortOrder = useTaskStore((state) => {
-    return state.toggleCalendarSortOrder;
-  });
-  const setSuccessMsg = useTaskStore((state) => {
-    return state.setSuccessMsg;
-  });
-  const addCalendar = useTaskStore((state) => {
-    return state.addCalendar;
-  });
-  const editCalendar = useTaskStore((state) => {
-    return state.editCalendar;
-  });
-  const deleteCalendar = useTaskStore((state) => {
-    return state.deleteCalendar;
-  });
+  const calendars = useTaskStore((state) => state.calendars);
+  const calendarSortOrder = useTaskStore((state) => state.calendarSortOrder);
+  const toggleCalendarSortOrder = useTaskStore(
+    (state) => state.toggleCalendarSortOrder,
+  );
+  const setSuccessMsg = useTaskStore((state) => state.setSuccessMsg);
+  const addCalendar = useTaskStore((state) => state.addCalendar);
+  const editCalendar = useTaskStore((state) => state.editCalendar);
+  const deleteCalendar = useTaskStore((state) => state.deleteCalendar);
   const selectedCalendarIDs = useTaskStore(
     (state) => state.selectedCalendarIDs,
   );
@@ -72,8 +60,8 @@ const SidebarCalendar = () => {
     try {
       let response = await addCalendar(cTitle);
       setSuccessMsg(response.message);
-    } catch (e) {
-      console.log(e);
+    } catch (err) {
+      console.error("SidebarCalendar component caught error:", err);
     } finally {
       setCTitle("");
     }
@@ -92,8 +80,8 @@ const SidebarCalendar = () => {
       let response = await editCalendar(c_id, editCTitle);
       setSuccessMsg(response.message);
       setEditingCalendarId(null);
-    } catch (e) {
-      console.log(e);
+    } catch (err) {
+      console.error("SidebarCalendar component caught error:", err);
     } finally {
       setEditCTitle("");
     }
@@ -109,8 +97,8 @@ const SidebarCalendar = () => {
     try {
       let response = await deleteCalendar(c_id);
       setSuccessMsg(response.message);
-    } catch (e) {
-      console.log(e);
+    } catch (err) {
+      console.error("SidebarCalendar component caught error:", err);
     }
     setTimeout(() => {
       setSuccessMsg(null);

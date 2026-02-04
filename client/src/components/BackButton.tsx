@@ -7,7 +7,7 @@ const BackButton = () => {
     navigate("/");
   };
   return (
-    <div className="h-16">
+    <div className="h-[10vh]">
       <button
         onClick={handleBack}
         className="mx-3 my-3 px-4 py-2 flex items-center border-2 rounded-lg shadow-lg text-gray-900 hover:text-white hover:bg-gray-400 transition-colors duration-300"

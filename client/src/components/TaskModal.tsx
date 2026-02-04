@@ -25,10 +25,10 @@ const TaskModal: React.FC<TaskModalProps> = ({
   const [formTitle, setFormTitle] = useState(currentTask?.title || "");
   const [formCalendar, setFormCalendar] = useState(currentTask?.calendar || "");
   const [formPriority, setFormPriority] = useState<Priority>(
-    currentTask?.priority || "low"
+    currentTask?.priority || "low",
   );
   const [formProgress, setFormProgress] = useState<Progress>(
-    currentTask?.progress || "not started"
+    currentTask?.progress || "not started",
   );
   // (e.g., '2025-12-06T13:22:19.000Z')
   const initialDate = currentTask?.date ? new Date(currentTask.date) : null;
@@ -44,7 +44,7 @@ const TaskModal: React.FC<TaskModalProps> = ({
   const [formTimeStr, setFormTimeStr] = useState(initialTimeStr);
   const [formCycle, setFormCycle] = useState(currentTask?.cycle || false);
   const [formCycleInterval, setFormCycleInterval] = useState(
-    currentTask?.cycleInterval || 0
+    currentTask?.cycleInterval || 0,
   );
   const [formLocation, setFormLocation] = useState(currentTask?.location || "");
   const [formNotes, setFormNotes] = useState(currentTask?.notes || "");
@@ -94,8 +94,8 @@ const TaskModal: React.FC<TaskModalProps> = ({
           setSuccessMsg(null);
         }, 3000);
       }
-    } catch (e) {
-      console.log(e);
+    } catch (err) {
+      console.error("TaskModal component caught error:", err);
       setTimeout(() => {
         setErrorTaskMsg(null);
       }, 3000);
@@ -117,7 +117,7 @@ const TaskModal: React.FC<TaskModalProps> = ({
           : new Date();
         const nextOccurrence = new Date(baseDate);
         nextOccurrence.setDate(
-          nextOccurrence.getDate() + (formCycleInterval || 1)
+          nextOccurrence.getDate() + (formCycleInterval || 1),
         );
         const updatedData = {
           title: formTitle,
@@ -140,8 +140,8 @@ const TaskModal: React.FC<TaskModalProps> = ({
           setSuccessMsg(null);
         }, 3000);
       }
-    } catch (e) {
-      console.log(e);
+    } catch (err) {
+      console.error("TaskModal component caught error:", err);
     }
   };
   const handleDelete = async () => {
@@ -150,8 +150,8 @@ const TaskModal: React.FC<TaskModalProps> = ({
       let response = await deleteTask(currentTask!._id);
       setSuccessMsg(response.message);
       toggleModal();
-    } catch (e) {
-      console.log(e);
+    } catch (err) {
+      console.error("TaskModal component caught error:", err);
     }
     setTimeout(() => {
       setSuccessMsg(null);
@@ -397,7 +397,7 @@ const TaskModal: React.FC<TaskModalProps> = ({
         </div>
       </div>
     </>,
-    modalRoot
+    modalRoot,
   );
 };
 

@@ -42,7 +42,7 @@ const Progress = () => {
     (task: Task) => {
       setEditingTask(task);
     },
-    [setEditingTask]
+    [setEditingTask],
   );
   const tasksByProgress = useMemo(() => {
     return processedTasks.reduce((acc: { [key: string]: Task[] }, task) => {
@@ -60,7 +60,7 @@ const Progress = () => {
   const sensor = useSensors(
     useSensor(PointerSensor, {
       activationConstraint: { distance: 5 },
-    })
+    }),
   );
   const handleDragStart = (event: DragStartEvent) => {
     const { active } = event;
@@ -92,8 +92,8 @@ const Progress = () => {
         setTimeout(() => {
           setSuccessMsg(null);
         }, 3000);
-      } catch (e) {
-        console.log(e);
+      } catch (err) {
+        console.error("Progress component caught error:", err);
         setTimeout(() => {
           setErrorTaskMsg(null);
         }, 3000);
