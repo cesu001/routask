@@ -9,29 +9,17 @@ import { IoMdSwap } from "react-icons/io";
 import { FaAngleUp, FaAngleDown } from "react-icons/fa";
 
 const SidebarCalendar = () => {
-  const calendars = useTaskStore((state) => {
-    return state.calendars;
-  });
-  const calendarSortOrder = useTaskStore((state) => {
-    return state.calendarSortOrder;
-  });
-  const toggleCalendarSortOrder = useTaskStore((state) => {
-    return state.toggleCalendarSortOrder;
-  });
-  const setSuccessMsg = useTaskStore((state) => {
-    return state.setSuccessMsg;
-  });
-  const addCalendar = useTaskStore((state) => {
-    return state.addCalendar;
-  });
-  const editCalendar = useTaskStore((state) => {
-    return state.editCalendar;
-  });
-  const deleteCalendar = useTaskStore((state) => {
-    return state.deleteCalendar;
-  });
+  const calendars = useTaskStore((state) => state.calendars);
+  const calendarSortOrder = useTaskStore((state) => state.calendarSortOrder);
+  const toggleCalendarSortOrder = useTaskStore(
+    (state) => state.toggleCalendarSortOrder,
+  );
+  const setSuccessMsg = useTaskStore((state) => state.setSuccessMsg);
+  const addCalendar = useTaskStore((state) => state.addCalendar);
+  const editCalendar = useTaskStore((state) => state.editCalendar);
+  const deleteCalendar = useTaskStore((state) => state.deleteCalendar);
   const selectedCalendarIDs = useTaskStore(
-    (state) => state.selectedCalendarIDs
+    (state) => state.selectedCalendarIDs,
   );
   const selectCalendar = useTaskStore((state) => state.selectCalendar);
 
@@ -39,7 +27,7 @@ const SidebarCalendar = () => {
   const [isAddCalendarOpen, setIsAddCalendarOpen] = useState(false);
   const [cTitle, setCTitle] = useState("");
   const [editingCalendarId, setEditingCalendarId] = useState<string | null>(
-    null
+    null,
   );
   const [editCTitle, setEditCTitle] = useState("");
   const toggleCalendar = () => {
@@ -72,8 +60,8 @@ const SidebarCalendar = () => {
     try {
       let response = await addCalendar(cTitle);
       setSuccessMsg(response.message);
-    } catch (e) {
-      console.log(e);
+    } catch (err) {
+      console.error("SidebarCalendar component caught error:", err);
     } finally {
       setCTitle("");
     }
@@ -92,8 +80,8 @@ const SidebarCalendar = () => {
       let response = await editCalendar(c_id, editCTitle);
       setSuccessMsg(response.message);
       setEditingCalendarId(null);
-    } catch (e) {
-      console.log(e);
+    } catch (err) {
+      console.error("SidebarCalendar component caught error:", err);
     } finally {
       setEditCTitle("");
     }
@@ -109,8 +97,8 @@ const SidebarCalendar = () => {
     try {
       let response = await deleteCalendar(c_id);
       setSuccessMsg(response.message);
-    } catch (e) {
-      console.log(e);
+    } catch (err) {
+      console.error("SidebarCalendar component caught error:", err);
     }
     setTimeout(() => {
       setSuccessMsg(null);
@@ -197,6 +185,7 @@ const SidebarCalendar = () => {
               <div className="flex-grow mr-2 px-2 py-2">
                 <input
                   value={editCTitle}
+                  onClick={(e) => e.stopPropagation()}
                   onChange={handleEditCTitleChange}
                   name="editCTitle"
                   className="w-3/5 bg-white text-black rounded p-1 text-lg font-semibold"
@@ -218,14 +207,20 @@ const SidebarCalendar = () => {
             <div className="absolute top-1/2 -translate-y-1/2 right-1 flex justify-around items-center space-x-3 invisible group-hover:visible opacity-0 group-hover:opacity-100 transition-opacity ease-in-out duration-200">
               {editingCalendarId === calendar._id ? (
                 <button
-                  onClick={() => handleSaveEditCalendar(calendar._id)}
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    handleSaveEditCalendar(calendar._id);
+                  }}
                   className="transition-all ease-in-out duration-200 hover:scale-120 hover:text-blue-600"
                 >
                   <FaSave />
                 </button>
               ) : (
                 <button
-                  onClick={() => handleEditCTitleClick(calendar)}
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    handleEditCTitleClick(calendar);
+                  }}
                   className="transition-all ease-in-out duration-200 hover:scale-120 hover:text-teal-600"
                 >
                   <IoPencil size={18} />
@@ -233,7 +228,10 @@ const SidebarCalendar = () => {
               )}
               {editingCalendarId === calendar._id ? (
                 <button
-                  onClick={() => handleEditCTitleClick(calendar)}
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    handleEditCTitleClick(calendar);
+                  }}
                   className="transition-all ease-in-out duration-200 hover:scale-120 hover:text-red-600"
                 >
                   <ImCross size={16} />
@@ -241,7 +239,10 @@ const SidebarCalendar = () => {
               ) : (
                 <button
                   type="button"
-                  onClick={() => handleDeleteCalendar(calendar._id)}
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    handleDeleteCalendar(calendar._id);
+                  }}
                   className="transition-all ease-in-out duration-200 hover:scale-120 hover:text-red-600"
                 >
                   <IoMdTrash size={18} />

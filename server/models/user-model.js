@@ -27,13 +27,11 @@ const userSchema = new Schema({
 });
 
 // instance methods
-userSchema.methods.comparePassword = async function (password, cb) {
-  let result;
+userSchema.methods.comparePassword = async function (password) {
   try {
-    result = await bcrypt.compare(password, this.password);
-    return cb(null, result);
+    return await bcrypt.compare(password, this.password);
   } catch (err) {
-    return cb(err, result);
+    throw new Error("Password comparison failed.");
   }
 };
 
@@ -47,37 +45,17 @@ userSchema.pre("save", async function (next) {
   next();
 });
 
-// userSchema.pre("findOneAndUpdate", async function (next) {
-//   if (this.isModified("password")) {
-//     const newHashValue = await bcrypt.hash(this.password, 10);
-//     this.password = newHashValue;
-//   }
-//   next();
-// });
-
 userSchema.pre("findOneAndUpdate", async function (next) {
-  // `this` 在查詢中間件中指向 Query 物件
   const update = this.getUpdate();
-
-  // 檢查更新操作中是否包含 'password' 欄位
   if (update && update.password) {
     try {
-      // 執行雜湊
       const hashedPassword = await bcrypt.hash(update.password, 10);
-
-      // 將查詢中的密碼替換為雜湊值
       update.password = hashedPassword;
-      // 或者使用 $set 語法（如果您的更新使用了 $set）
-      // if (update.$set && update.$set.password) {
-      //   update.$set.password = hashedPassword;
-      // }
-
-      this.setUpdate(update); // 將修改後的更新物件傳回給 Mongoose
+      this.setUpdate(update);
     } catch (error) {
       return next(error);
     }
   }
-
   next();
 });
 

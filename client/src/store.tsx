@@ -15,10 +15,20 @@ import {
   type FetchResetPwdProps,
   type ResetPwdProps,
 } from "../types";
+import axios, { AxiosError } from "axios";
 
+const handleAuthStoreError = (err: unknown, set: (state: any) => void) => {
+  if (axios.isAxiosError(err)) {
+    const serverError = err as AxiosError<string>;
+    const message = serverError.response?.data || "Server connectivity issue.";
+    set({ errorMessage: message });
+  } else {
+    set({ errorMessage: "An unexpected error occurred." });
+  }
+};
 
 export const useAuthStore = create<AuthStore>((set) => ({
-  currentUser: null,
+  currentUser: AuthService.getCurrentUser(),
   successMessage: null,
   setSuccessMessage: (message) => {
     set({ successMessage: message });
@@ -37,20 +47,19 @@ export const useAuthStore = create<AuthStore>((set) => ({
       });
       set({ errorMessage: null });
       set({ successMessage: "Registration successful! Please log in." });
-    } catch (err: any) {
-      set({ errorMessage: err.response.data });
+    } catch (err: unknown) {
+      handleAuthStoreError(err, set);
       throw err;
     }
   },
   login: async ({ email, password }: LoginData) => {
     try {
       let response = await AuthService.login({ email, password });
-      // console.log(response);
       localStorage.setItem("user", JSON.stringify(response.data));
       set({ currentUser: AuthService.getCurrentUser() });
       set({ errorMessage: null });
-    } catch (err: any) {
-      set({ errorMessage: err.response.data });
+    } catch (err: unknown) {
+      handleAuthStoreError(err, set);
       throw err;
     }
   },
@@ -58,8 +67,8 @@ export const useAuthStore = create<AuthStore>((set) => ({
     try {
       AuthService.logout();
       set({ currentUser: null });
-    } catch (err: any) {
-      set({ errorMessage: err.response.data });
+    } catch (err: unknown) {
+      handleAuthStoreError(err, set);
       throw err;
     }
   },
@@ -67,8 +76,8 @@ export const useAuthStore = create<AuthStore>((set) => ({
     try {
       let response = await ProfileService.fetchUserData(_id);
       return response.data;
-    } catch (err: any) {
-      set({ errorMessage: err.response.data });
+    } catch (err: unknown) {
+      handleAuthStoreError(err, set);
       throw err;
     }
   },
@@ -76,8 +85,8 @@ export const useAuthStore = create<AuthStore>((set) => ({
     try {
       let response = await ProfileService.updateUserData({ _id, fName, lName });
       return response.data;
-    } catch (err: any) {
-      set({ errorMessage: err.response.data });
+    } catch (err: unknown) {
+      handleAuthStoreError(err, set);
       throw err;
     }
   },
@@ -93,8 +102,8 @@ export const useAuthStore = create<AuthStore>((set) => ({
         newPassword,
       });
       return response.data;
-    } catch (err: any) {
-      set({ errorMessage: err.response.data });
+    } catch (err: unknown) {
+      handleAuthStoreError(err, set);
       throw err;
     }
   },
@@ -102,8 +111,8 @@ export const useAuthStore = create<AuthStore>((set) => ({
     try {
       let response = await AuthService.forgotPassword(email);
       return response.data;
-    } catch (err: any) {
-      set({ errorMessage: err.response.data });
+    } catch (err: unknown) {
+      handleAuthStoreError(err, set);
       throw err;
     }
   },
@@ -111,8 +120,8 @@ export const useAuthStore = create<AuthStore>((set) => ({
     try {
       let response = await AuthService.fetchResetPwd({ _id, token });
       return response.data;
-    } catch (err: any) {
-      set({ errorMessage: err.response.data });
+    } catch (err: unknown) {
+      handleAuthStoreError(err, set);
       throw err;
     }
   },
@@ -124,12 +133,22 @@ export const useAuthStore = create<AuthStore>((set) => ({
         newPassword,
       });
       return response.data;
-    } catch (err: any) {
-      set({ errorMessage: err.response.data });
+    } catch (err: unknown) {
+      handleAuthStoreError(err, set);
       throw err;
     }
   },
 }));
+
+const handleTaskStoreError = (err: unknown, set: (state: any) => void) => {
+  if (axios.isAxiosError(err)) {
+    const serverError = err as AxiosError<string>;
+    const message = serverError.response?.data || "Server connectivity issue.";
+    set({ errorTaskMsg: message });
+  } else {
+    set({ errorTaskMsg: "An unexpected error occurred." });
+  }
+};
 
 export const useTaskStore = create<TaskStore>((set) => ({
   successMsg: null,
@@ -197,8 +216,8 @@ export const useTaskStore = create<TaskStore>((set) => ({
         set({ calendars: [] });
       }
       return response.data;
-    } catch (err: any) {
-      set({ errorTaskMsg: err.response.data });
+    } catch (err: unknown) {
+      handleTaskStoreError(err, set);
       throw err;
     }
   },
@@ -208,8 +227,8 @@ export const useTaskStore = create<TaskStore>((set) => ({
       const newCalendar = response.data.savedCalendar;
       set((state) => ({ calendars: [...state.calendars, newCalendar] }));
       return response.data;
-    } catch (err: any) {
-      set({ errorTaskMsg: err.response.data });
+    } catch (err: unknown) {
+      handleTaskStoreError(err, set);
       throw err;
     }
   },
@@ -222,8 +241,8 @@ export const useTaskStore = create<TaskStore>((set) => ({
         ),
       }));
       return response.data;
-    } catch (err: any) {
-      set({ errorTaskMsg: err.response.data });
+    } catch (err: unknown) {
+      handleTaskStoreError(err, set);
       throw err;
     }
   },
@@ -235,8 +254,8 @@ export const useTaskStore = create<TaskStore>((set) => ({
         tasks: state.tasks.filter((t) => t.calendar !== _id),
       }));
       return response.data;
-    } catch (err: any) {
-      set({ errorTaskMsg: err.response.data });
+    } catch (err: unknown) {
+      handleTaskStoreError(err, set);
       throw err;
     }
   },
@@ -250,8 +269,8 @@ export const useTaskStore = create<TaskStore>((set) => ({
         set({ tasks: [] });
       }
       return response.data;
-    } catch (err: any) {
-      set({ errorTaskMsg: err.response.data });
+    } catch (err: unknown) {
+      handleTaskStoreError(err, set);
       throw err;
     }
   },
@@ -281,8 +300,8 @@ export const useTaskStore = create<TaskStore>((set) => ({
       const newTask = response.data.savedTask;
       set((state) => ({ tasks: [...state.tasks, newTask] }));
       return response.data;
-    } catch (err: any) {
-      set({ errorTaskMsg: err.response.data });
+    } catch (err: unknown) {
+      handleTaskStoreError(err, set);
       throw err;
     }
   },
@@ -316,8 +335,8 @@ export const useTaskStore = create<TaskStore>((set) => ({
         tasks: state.tasks.map((t) => (t._id === _id ? updatedTask : t)),
       }));
       return response.data;
-    } catch (err: any) {
-      set({ errorTaskMsg: err.response.data });
+    } catch (err: unknown) {
+      handleTaskStoreError(err, set);
       throw err;
     }
   },
@@ -329,8 +348,8 @@ export const useTaskStore = create<TaskStore>((set) => ({
         tasks: state.tasks.map((t) => (t._id === _id ? updatedTask : t)),
       }));
       return response.data;
-    } catch (err: any) {
-      set({ errorTaskMsg: err.response.data });
+    } catch (err: unknown) {
+      handleTaskStoreError(err, set);
       throw err;
     }
   },
@@ -341,8 +360,8 @@ export const useTaskStore = create<TaskStore>((set) => ({
         tasks: state.tasks.filter((t) => t._id !== _id),
       }));
       return response.data;
-    } catch (err: any) {
-      set({ errorTaskMsg: err.response.data });
+    } catch (err: unknown) {
+      handleTaskStoreError(err, set);
       throw err;
     }
   },

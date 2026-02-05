@@ -19,12 +19,20 @@ const EventCalendarModal: React.FC<
     (task: Task) => {
       setEditingTask(task);
     },
-    [setEditingTask]
+    [setEditingTask],
   );
   const modalDate = dayOpen ? format(dayOpen, "MMM do") : "No Date";
   const calendarMap = React.useMemo(() => {
     return new Map(calendars.map((calendar) => [calendar._id, calendar.title]));
   }, [calendars]);
+  const sortedTasks = React.useMemo(() => {
+    const sorted = [...selectedTasks].sort((a, b) => {
+      const dateA = a.date || "";
+      const dateB = b.date || "";
+      return dateA.localeCompare(dateB);
+    });
+    return sorted;
+  }, [selectedTasks]);
   const [shouldRender, setShouldRender] = useState(isCModalOpen);
   const [isFullyOpen, setIsFullyOpen] = useState(isCModalOpen);
   useEffect(() => {
@@ -69,11 +77,11 @@ const EventCalendarModal: React.FC<
           </button>
         </div>
         <div className="flex-grow space-y-4 overflow-y-auto overflow-x-hidden pr-2">
-          {selectedTasks.length === 0 && (
+          {sortedTasks.length === 0 && (
             <div className="font-bold text-2xl ">No Task Found!</div>
           )}
-          {selectedTasks.length > 0 &&
-            selectedTasks.map((task) => {
+          {sortedTasks.length > 0 &&
+            sortedTasks.map((task) => {
               return (
                 <TaskCard
                   key={task._id}
@@ -88,7 +96,7 @@ const EventCalendarModal: React.FC<
         </div>
       </div>
     </div>,
-    cmodal
+    cmodal,
   );
 };
 

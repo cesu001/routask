@@ -30,8 +30,9 @@ const Login = () => {
     }
     try {
       await login({ email, password });
-    } catch (e: any) {
-      console.log(e);
+      navigate("/index");
+    } catch (err: unknown) {
+      console.error("Login component caught error:", err);
     }
   };
   const errorMessageToggle = () => {
@@ -44,26 +45,16 @@ const Login = () => {
       setErrorMessage("Password length must be at least 6 characters long.");
     }
   }, [errorMessage]);
+  useEffect(() => {
+    if (currentUser) {
+      navigate("/index", { replace: true });
+    }
+  }, [currentUser, navigate]);
+  if (currentUser) {
+    return <div className="h-screen bg-gray-100"></div>;
+  }
   return (
-    <div>
-      {currentUser && (
-        <div
-          style={{ backgroundColor: "rgba(0,0,0,0.7)" }}
-          className="fixed inset-0 flex justify-center items-center z-10"
-        >
-          <div className="w-128 bg-white p-10 rounded-lg shadow-lg text-center">
-            <h2 className="text-2xl font-bold mb-4">
-              You are already logged in.
-            </h2>
-            <button
-              onClick={() => navigate("/index")}
-              className="mt-4 px-4 py-2 bg-teal-600 text-white rounded hover:bg-teal-400"
-            >
-              Go to Task Index
-            </button>
-          </div>
-        </div>
-      )}
+    <div className="min-h-screen flex flex-col">
       <BackButton />
       {errorMessage && (
         <div
@@ -81,12 +72,12 @@ const Login = () => {
           </div>
         </div>
       )}
-      <div className="h-224 flex justify-center items-center">
+      <div className="h-[90vh] flex justify-center items-center">
         <form
           onSubmit={handleLogin}
-          className="h-156 w-120 border-2 border-gray-400 rounded-xl shadow-xl flex flex-col justify-around items-center gap-10"
+          className="p-5 lg:p-2 w-96 h-128 lg:w-120 lg:h-156 max-w-[90vw] border-2 border-gray-400 rounded-xl shadow-xl flex flex-col justify-around items-center gap-10"
         >
-          <img src={LogoBlack} alt="logoblack" className="h-24 mt-5" />
+          <img src={LogoBlack} alt="logoblack" className="h-20 lg:h-24 mt-5" />
           <div className="flex justify-center flex-col gap-9 w-3/4 h-72">
             <div className="flex items-center border-2 rounded-full px-4 py-2 gap-1">
               <MdEmail />
@@ -110,11 +101,11 @@ const Login = () => {
           <div className="h-60 flex flex-col items-center gap-6">
             <button
               type="submit"
-              className="w-1/3 px-4 py-2 text-2xl font-bold border-2 border-teal-600 rounded-xl hover:cursor-pointer hover:bg-teal-600 hover:text-white transition-colors duration-300"
+              className="w-1/3 lg:w-1/2 px-4 py-2 text-sm lg:text-2xl font-bold border-2 border-teal-600 rounded-xl hover:cursor-pointer hover:bg-teal-600 hover:text-white transition-colors duration-300"
             >
               Sign In
             </button>
-            <div className="w-120 flex flex-col justify-center items-center gap-3">
+            <div className="w-full flex flex-col justify-center items-center gap-3">
               <p>
                 Not sign up yet? Sign up{" "}
                 <Link to="/register">

@@ -19,6 +19,7 @@ const ResetPasswordNew = () => {
   const [newPassword, setNewPassword] = useState("");
   const [checkNewPassword, setCheckNewPassword] = useState("");
   const [pwdChangeMsg, setPwdChangeMsg] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
   const [isPwdChange, setIsPwdChange] = useState(false);
   const handleNewPasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setNewPassword(e.target.value);
@@ -39,6 +40,7 @@ const ResetPasswordNew = () => {
       setErrorMessage("New passwords do not match.");
       return;
     }
+    setIsLoading(true);
     try {
       if (_id && token) {
         let response = await resetPassword({ _id, token, newPassword });
@@ -47,8 +49,10 @@ const ResetPasswordNew = () => {
           setIsPwdChange(!isPwdChange);
         }
       }
-    } catch (e) {
-      console.log(e);
+    } catch (err: unknown) {
+      console.error("ResetPasswordNew Component caught error:", err);
+    } finally {
+      setIsLoading(false);
     }
   };
   const handleRedirect = () => {
@@ -61,13 +65,13 @@ const ResetPasswordNew = () => {
     if (_id && token) {
       fetchResetPwd({ _id, token })
         .then((data) => {
-          setEmail(data.email);
+          if (data?.email) setEmail(data.email);
         })
-        .catch((e) => {
-          console.log(e);
+        .catch((err: unknown) => {
+          console.error("Fetch failed.", err);
         });
     }
-  }, [_id, token, fetchResetPwd]);
+  }, [_id, token, fetchResetPwd, setEmail]);
   useEffect(() => {
     if (errorMessage?.includes("newPassword")) {
       setErrorMessage(
@@ -78,140 +82,146 @@ const ResetPasswordNew = () => {
     if (errorMessage?.includes("Not verified.")) {
       setErrorMessage("User not found.");
     }
-  }, [errorMessage]);
+  }, [errorMessage, setErrorMessage]);
   return (
-    <div>
-      <div>
-        {isPwdChange && (
-          <div
-            style={{ backgroundColor: "rgba(0,0,0,0.7)" }}
-            className="fixed inset-0 flex justify-center items-center z-10"
-          >
-            <div className="w-128 bg-white p-10 rounded-lg shadow-lg text-center">
-              <h2 className="text-2xl font-bold mb-4">{pwdChangeMsg}</h2>
-              <button
-                onClick={handleRedirect}
-                className="mt-4 px-4 py-2 bg-teal-600 text-white rounded hover:bg-teal-400"
-              >
-                Login again.
-              </button>
-            </div>
+    <div className="min-h-screen flex flex-col">
+      {isPwdChange && (
+        <div
+          style={{ backgroundColor: "rgba(0,0,0,0.7)" }}
+          className="fixed inset-0 flex justify-center items-center z-10"
+        >
+          <div className="w-128 bg-white p-10 rounded-lg shadow-lg text-center">
+            <h2 className="text-2xl font-bold mb-4">{pwdChangeMsg}</h2>
+            <button
+              onClick={handleRedirect}
+              className="mt-4 px-4 py-2 bg-teal-600 text-white rounded hover:bg-teal-400"
+            >
+              Login again.
+            </button>
           </div>
-        )}
-        <BackButton />
-        {errorMessage && (
-          <div
-            style={{ backgroundColor: "rgba(0,0,0,0.7)" }}
-            className="fixed inset-0 flex justify-center items-center z-10"
-          >
-            <div className="w-128 bg-white p-10 rounded-lg shadow-lg text-center">
-              <h2 className="text-2xl font-bold mb-4">{errorMessage}</h2>
-              {errorMessage?.includes("Invalid") ? (
-                <p className="text-lg">
-                  {errorMessage?.includes("ID")
-                    ? "Please ensure you have valid ID."
-                    : "Please ensure you have valid token."}
-                </p>
-              ) : (
-                <p className="text-lg">
-                  {errorMessage?.includes("User not found.")
-                    ? "Please ensure you have valid email."
-                    : "Please check your new password again."}
-                </p>
-              )}
-              <button
-                onClick={() => {
-                  if (errorMessage?.includes("User not found.")) {
-                    errorMessageToggle();
-                    navigate("/reset");
-                  } else if (errorMessage?.includes("Invalid")) {
-                    errorMessageToggle();
-                    navigate("/reset");
-                  } else {
-                    errorMessageToggle();
-                  }
-                }}
-                className="mt-4 px-4 py-2 bg-teal-600 text-white rounded hover:bg-teal-400"
-              >
-                OK
-              </button>
-            </div>
+        </div>
+      )}
+      <BackButton />
+      {errorMessage && (
+        <div
+          style={{ backgroundColor: "rgba(0,0,0,0.7)" }}
+          className="fixed inset-0 flex justify-center items-center z-10"
+        >
+          <div className="w-128 bg-white p-10 rounded-lg shadow-lg text-center">
+            <h2 className="text-2xl font-bold mb-4">{errorMessage}</h2>
+            {errorMessage?.includes("Invalid") ? (
+              <p className="text-lg">
+                {errorMessage?.includes("ID")
+                  ? "Please ensure you have valid ID."
+                  : "Please ensure you have valid token."}
+              </p>
+            ) : (
+              <p className="text-lg">
+                {errorMessage?.includes("User not found.")
+                  ? "Please ensure you have valid email."
+                  : "Please check your new password again."}
+              </p>
+            )}
+            <button
+              onClick={() => {
+                if (errorMessage?.includes("User not found.")) {
+                  errorMessageToggle();
+                  navigate("/reset");
+                } else if (errorMessage?.includes("Invalid")) {
+                  errorMessageToggle();
+                  navigate("/reset");
+                } else {
+                  errorMessageToggle();
+                }
+              }}
+              className="mt-4 px-4 py-2 bg-teal-600 text-white rounded hover:bg-teal-400"
+            >
+              OK
+            </button>
           </div>
-        )}
-        <div className="h-224 flex justify-center items-center">
-          <form
-            onSubmit={handleResetPassword}
-            className="h-156 w-120 border-2 border-gray-400 rounded-xl shadow-xl flex flex-col justify-around items-center gap-10"
-          >
-            <img src={LogoBlack} alt="logoblack" className="h-24 mt-5" />
-            <div className="flex justify-around flex-col gap-9 w-3/4 h-72">
+        </div>
+      )}
+      <div className="h-[90vh] flex justify-center items-center">
+        <form
+          onSubmit={handleResetPassword}
+          className="p-5 lg:p-2 w-96 h-128 lg:w-120 lg:h-156 max-w-[90vw] border-2 border-gray-400 rounded-xl shadow-xl flex flex-col justify-around items-center gap-3 lg:gap-10"
+        >
+          <img
+            src={LogoBlack}
+            alt="logoblack"
+            className="h-20 lg:h-24 mt-2 lg:mt-5"
+          />
+          <div className="flex justify-around flex-col gap-5 lg:gap-9 w-3/4 h-72">
+            <div className="flex items-center border-2 rounded-full px-4 py-2 gap-1">
+              <MdEmail />
+              <input
+                type="email"
+                placeholder="Email:"
+                className="bg-transparent outline-none w-full"
+                name="email"
+                disabled
+                value={email}
+              />
+            </div>
+            <div className="flex flex-col gap-4">
+              <h2 className="text-lg lg:text-xl font-semibold">
+                New Password :
+              </h2>
               <div className="flex items-center border-2 rounded-full px-4 py-2 gap-1">
-                <MdEmail />
+                <RiLockPasswordFill />
                 <input
-                  type="email"
-                  placeholder="Email:"
+                  type="password"
+                  placeholder="New Password:"
                   className="bg-transparent outline-none w-full"
-                  name="email"
-                  disabled
-                  value={email}
+                  name="password"
+                  onChange={handleNewPasswordChange}
+                  value={newPassword}
                 />
               </div>
-              <div className="flex flex-col gap-3">
-                <h2 className="text-xl font-semibold">New Password :</h2>
-                <div className="flex items-center border-2 rounded-full px-4 py-2 gap-1">
-                  <RiLockPasswordFill />
-                  <input
-                    type="password"
-                    placeholder="New Password:"
-                    className="bg-transparent outline-none w-full"
-                    name="password"
-                    onChange={handleNewPasswordChange}
-                    value={newPassword}
-                  />
-                </div>
-                <div className="flex items-center border-2 rounded-full px-4 py-2 gap-1">
-                  <RiLockPasswordFill />
-                  <input
-                    type="password"
-                    placeholder="New Password Check:"
-                    className="bg-transparent outline-none w-full"
-                    name="password"
-                    onChange={handleCheckNewPasswordChange}
-                    value={checkNewPassword}
-                  />
-                </div>
+              <div className="flex items-center border-2 rounded-full px-4 py-2 gap-1">
+                <RiLockPasswordFill />
+                <input
+                  type="password"
+                  placeholder="New Password Check:"
+                  className="bg-transparent outline-none w-full"
+                  name="password"
+                  onChange={handleCheckNewPasswordChange}
+                  value={checkNewPassword}
+                />
               </div>
             </div>
-            <div className="h-60 flex flex-col items-center gap-6">
-              <button
-                type="submit"
-                className="w-1/3 px-4 py-2 text-2xl font-bold border-2 border-teal-600 rounded-xl hover:cursor-pointer hover:bg-teal-600 hover:text-white transition-colors duration-300"
-              >
-                Reset
-              </button>
-              <div className="w-120 flex flex-col justify-center items-center gap-3">
-                <p>
-                  Not sign up yet? Sign up{" "}
-                  <Link to="/register">
-                    <span className="text-teal-600 font-bold hover:underline hover:cursor-pointer">
-                      here
-                    </span>
-                  </Link>
-                </p>
-                <p>
-                  Remember your Password? Sign in{" "}
-                  <Link to="/login">
-                    <span className="text-teal-600 font-bold hover:underline hover:cursor-pointer">
-                      here
-                    </span>
-                  </Link>
-                </p>
-              </div>
+          </div>
+          <div className="h-60 flex flex-col items-center gap-6">
+            <button
+              type="submit"
+              disabled={isLoading}
+              className={`w-1/3 lg:w-1/2 px-4 py-2 text-sm lg:text-2xl font-bold border-2 border-teal-600 rounded-xl transition-colors duration-300 
+                ${isLoading ? "opacity-50 cursor-not-allowed" : "hover:bg-teal-600 hover:text-white hover:cursor-pointer"}`}
+            >
+              {isLoading ? "Resetting..." : "Reset"}
+            </button>
+            <div className="w-full flex flex-col text-center justify-center items-center gap-3">
+              <p>
+                Not sign up yet? Sign up{" "}
+                <Link to="/register">
+                  <span className="text-teal-600 font-bold hover:underline hover:cursor-pointer">
+                    here
+                  </span>
+                </Link>
+              </p>
+              <p>
+                Remember your Password? Sign in{" "}
+                <Link to="/login">
+                  <span className="text-teal-600 font-bold hover:underline hover:cursor-pointer">
+                    here
+                  </span>
+                </Link>
+              </p>
             </div>
-          </form>
-        </div>
-        <Footer />
+          </div>
+        </form>
       </div>
+      <Footer />
     </div>
   );
 };
