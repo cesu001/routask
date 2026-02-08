@@ -1,6 +1,6 @@
 import axios from "axios";
 import type { ChangePasswordProps, UpdateUserProps } from "../../types";
-const API_URL = "http://localhost:8080/api/profile";
+const API_URL = import.meta.env.VITE_API_URL;
 
 class ProfileService {
   fetchUserData(_id: string) {
@@ -10,7 +10,7 @@ class ProfileService {
     } else {
       token = "";
     }
-    return axios.get(API_URL + `/info/${_id}`, {
+    return axios.get(`${API_URL}/profile` + `/info/${_id}`, {
       headers: {
         Authorization: token,
       },
@@ -24,7 +24,7 @@ class ProfileService {
       token = "";
     }
     return axios.put(
-      API_URL + `/info/${_id}`,
+      `${API_URL}/profile` + `/info/${_id}`,
       {
         fName,
         lName,
@@ -33,7 +33,7 @@ class ProfileService {
         headers: {
           Authorization: token,
         },
-      }
+      },
     );
   }
   changePassword({ _id, oldPassword, newPassword }: ChangePasswordProps) {
@@ -44,7 +44,7 @@ class ProfileService {
       token = "";
     }
     return axios.put(
-      API_URL + `/password/${_id}`,
+      `${API_URL}/profile` + `/password/${_id}`,
       {
         oldPassword,
         newPassword,
@@ -53,7 +53,7 @@ class ProfileService {
         headers: {
           Authorization: token,
         },
-      }
+      },
     );
   }
 }

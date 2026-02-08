@@ -9,6 +9,7 @@ const profileRoute = require("./routes").profile;
 const taskRoute = require("./routes").task;
 const passport = require("passport");
 require("./config/passport")(passport);
+const clientOrigin = process.env.CLIENT_ORIGIN;
 
 mongoose
   .connect(process.env.MONGO_URI)
@@ -22,21 +23,29 @@ mongoose
 // Middleware
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.use(cors());
+app.use(
+  cors({
+    origin: ["http://localhost:5173", clientOrigin],
+    credentials: true,
+    methods: ["GET", "POST", "PUT", "DELETE"],
+    allowedHeaders: ["Content-Type", "Authorization"],
+  }),
+);
 
 // Routes
 app.use("/api/user", authRoute);
 app.use(
   "/api/profile",
   passport.authenticate("jwt", { session: false }),
-  profileRoute
+  profileRoute,
 );
 app.use(
   "/api/task",
   passport.authenticate("jwt", { session: false }),
-  taskRoute
+  taskRoute,
 );
 
 app.listen(8080, () => {
   console.log("Server is running on port 8080");
+  console.log(`CORS allowed for: ${clientOrigin}`);
 });

@@ -1,6 +1,6 @@
 import axios from "axios";
-const API_URL = "http://localhost:8080/api/task";
 import { type AddTaskProps } from "../../types";
+const API_URL = import.meta.env.VITE_API_URL;
 
 class TaskService {
   fetchCalendarData(_id: string) {
@@ -10,7 +10,7 @@ class TaskService {
     } else {
       token = "";
     }
-    return axios.get(API_URL + `/calendar/${_id}`, {
+    return axios.get(`${API_URL}/task` + `/calendar/${_id}`, {
       headers: {
         Authorization: token,
       },
@@ -24,7 +24,7 @@ class TaskService {
       token = "";
     }
     return axios.post(
-      API_URL + "/calendar",
+      `${API_URL}/task` + "/calendar",
       {
         title,
       },
@@ -32,7 +32,7 @@ class TaskService {
         headers: {
           Authorization: token,
         },
-      }
+      },
     );
   }
   editCalendar(_id: string, editCTitle: string) {
@@ -43,11 +43,11 @@ class TaskService {
       token = "";
     }
     return axios.put(
-      API_URL + `/calendar/edit/${_id}`,
+      `${API_URL}/task` + `/calendar/edit/${_id}`,
       {
         title: editCTitle,
       },
-      { headers: { Authorization: token } }
+      { headers: { Authorization: token } },
     );
   }
   deleteCalendar(_id: string) {
@@ -57,7 +57,7 @@ class TaskService {
     } else {
       token = "";
     }
-    return axios.delete(API_URL + `/calendar/delete/${_id}`, {
+    return axios.delete(`${API_URL}/task` + `/calendar/delete/${_id}`, {
       headers: {
         Authorization: token,
       },
@@ -70,7 +70,7 @@ class TaskService {
     } else {
       token = "";
     }
-    return axios.get(API_URL + "/fetch", {
+    return axios.get(`${API_URL}/task` + "/fetch", {
       headers: {
         Authorization: token,
       },
@@ -94,7 +94,7 @@ class TaskService {
       token = "";
     }
     return axios.post(
-      API_URL + "/add",
+      `${API_URL}/task` + "/add",
       {
         title,
         calendar,
@@ -110,7 +110,7 @@ class TaskService {
         headers: {
           Authorization: token,
         },
-      }
+      },
     );
   }
   editTask({
@@ -132,7 +132,7 @@ class TaskService {
       token = "";
     }
     return axios.put(
-      API_URL + `/edit/${_id}`,
+      `${API_URL}/task` + `/edit/${_id}`,
       {
         title,
         calendar,
@@ -148,7 +148,7 @@ class TaskService {
         headers: {
           Authorization: token,
         },
-      }
+      },
     );
   }
   archiveTask(_id: string) {
@@ -159,13 +159,13 @@ class TaskService {
       token = "";
     }
     return axios.put(
-      API_URL + `/archive/${_id}`,
+      `${API_URL}/task` + `/archive/${_id}`,
       {},
       {
         headers: {
           Authorization: token,
         },
-      }
+      },
     );
   }
   deleteTask(_id: string) {
@@ -175,7 +175,7 @@ class TaskService {
     } else {
       token = "";
     }
-    return axios.delete(API_URL + `/delete/${_id}`, {
+    return axios.delete(`${API_URL}/task` + `/delete/${_id}`, {
       headers: {
         Authorization: token,
       },

@@ -5,11 +5,11 @@ import type {
   RegisterData,
   ResetPwdProps,
 } from "../../types";
-const API_URL = "http://localhost:8080/api/user";
+const API_URL = import.meta.env.VITE_API_URL;
 
 class AuthService {
   login({ email, password }: LoginData) {
-    return axios.post(API_URL + "/login", {
+    return axios.post(`${API_URL}/user` + "/login", {
       email,
       password,
     });
@@ -18,7 +18,7 @@ class AuthService {
     localStorage.removeItem("user");
   }
   register({ fName, lName, email, password }: RegisterData) {
-    return axios.post(API_URL + "/register", {
+    return axios.post(`${API_URL}/user` + "/register", {
       fName,
       lName,
       email,
@@ -26,15 +26,15 @@ class AuthService {
     });
   }
   forgotPassword(email: string) {
-    return axios.post(API_URL + "/forgot-password", {
+    return axios.post(`${API_URL}/user` + "/forgot-password", {
       email,
     });
   }
   fetchResetPwd({ _id, token }: FetchResetPwdProps) {
-    return axios.get(API_URL + `/reset-password/${_id}/${token}`);
+    return axios.get(`${API_URL}/user` + `/reset-password/${_id}/${token}`);
   }
   resetPassword({ _id, token, newPassword }: ResetPwdProps) {
-    return axios.put(API_URL + `/reset-password/${_id}/${token}`, {
+    return axios.put(`${API_URL}/user` + `/reset-password/${_id}/${token}`, {
       newPassword,
     });
   }
