@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from "react";
+import { useState, useMemo } from "react";
 import {
   format,
   isToday,
@@ -35,7 +35,7 @@ const EventCalendar = () => {
   const firstDayOfMonth = startOfMonth(viewDate);
   const calendarStart = startOfWeek(firstDayOfMonth);
   const calendarDays = Array.from({ length: 42 }).map((_, i) =>
-    addDays(calendarStart, i)
+    addDays(calendarStart, i),
   );
   const tasksByDate = useMemo(() => {
     return filteredTasks.reduce((acc: { [key: string]: Task[] }, task) => {

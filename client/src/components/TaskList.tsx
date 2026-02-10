@@ -19,7 +19,7 @@ const TaskList = () => {
     (task: Task) => {
       setEditingTask(task);
     },
-    [setEditingTask]
+    [setEditingTask],
   );
   const [searchQuery, setSearchQuery] = useState("");
   const [sortOrder, setSortOrder] = useState<"asc" | "desc">("asc");
@@ -130,7 +130,7 @@ const TaskList = () => {
                 >
                   {number}
                 </button>
-              )
+              ),
             )}
           </div>
           <button

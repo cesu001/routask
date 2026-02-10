@@ -9,18 +9,10 @@ import EventCalendar from "./EventCalendar";
 import Progress from "./Progress";
 
 const TaskMain = () => {
-  const currentUser = useAuthStore((state) => {
-    return state.currentUser;
-  });
-  const tasks = useTaskStore((state) => {
-    return state.tasks;
-  });
-  const editingTask = useTaskStore((state) => {
-    return state.editingTask;
-  });
-  const setEditingTask = useTaskStore((state) => {
-    return state.setEditingTask;
-  });
+  const currentUser = useAuthStore((state) => state.currentUser);
+  const tasks = useTaskStore((state) => state.tasks);
+  const editingTask = useTaskStore((state) => state.editingTask);
+  const setEditingTask = useTaskStore((state) => state.setEditingTask);
 
   const [isTaskListOpen, setIsTaskListOpen] = useState(true);
   const [isCalendarOpen, setIsCalendarOpen] = useState(false);
@@ -63,7 +55,7 @@ const TaskMain = () => {
   const todayTaskCount = useMemo(() => {
     const today = new Date().toISOString().split("T")[0];
     return tasks.filter(
-      (t) => t.date && t.date.startsWith(today) && t.archived !== true
+      (t) => t.date && t.date.startsWith(today) && t.archived !== true,
     ).length;
   }, [tasks]);
   return (

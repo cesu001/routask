@@ -34,7 +34,7 @@ const TaskModal: React.FC<TaskModalProps> = ({
   const initialDate = currentTask?.date ? new Date(currentTask.date) : null;
   // (e.g., '2025-12-06')
   const initialDateStr = initialDate
-    ? initialDate.toISOString().split("T")[0]
+    ? `${initialDate.getFullYear()}-${String(initialDate.getMonth() + 1).padStart(2, "0")}-${String(initialDate.getDate()).padStart(2, "0")}`
     : "";
   // (e.g., '13:22')
   const initialTimeStr = initialDate
@@ -215,7 +215,7 @@ const TaskModal: React.FC<TaskModalProps> = ({
   return ReactDOM.createPortal(
     <>
       <div
-        className={`fixed inset-0  z-45 transition-opacity duration-500
+        className={`fixed inset-0 z-45 transition-opacity duration-500
         ${isFullyOpen ? "opacity-100 bg-black/50" : "opacity-0"}
         `}
         onClick={toggleModal}
