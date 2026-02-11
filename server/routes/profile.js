@@ -28,7 +28,7 @@ router.put("/info/:_id", async (req, res) => {
     let updatedUser = await User.findOneAndUpdate(
       { _id },
       { fName, lName },
-      { new: true, runValidators: true }
+      { new: true, runValidators: true },
     );
     return res.send({
       message: "User info updated successfully.",
@@ -46,32 +46,27 @@ router.put("/password/:_id", async (req, res) => {
   }
   let { _id } = req.params;
   let { oldPassword, newPassword } = req.body;
-  const foundUser = await User.findOne({ _id }).exec();
-  if (!foundUser) {
-    return res.status(400).send("User not found.");
-  }
-  foundUser.comparePassword(oldPassword, async (err, isMatch) => {
-    if (err) {
-      return res.status(500).send(err);
+  try {
+    let foundUser = await User.findOne({ _id }).exec();
+    if (!foundUser) {
+      return res.status(400).send("User not found.");
     }
+    const isMatch = await foundUser.comparePassword(oldPassword);
     if (isMatch) {
-      try {
-        let updateUser = await User.findOneAndUpdate(
-          { _id },
-          { password: newPassword },
-          { new: true, runValidators: true }
-        );
-        return res.send({
-          message: "Password changed successfully.",
-        });
-      } catch (err) {
-        console.log(err);
-        return res.status(500).send("Password change failed.");
-      }
+      let updateUser = await User.findOneAndUpdate(
+        { _id },
+        { password: newPassword },
+        { new: true, runValidators: true },
+      );
+      return res.send({
+        message: "Password changed successfully.",
+      });
     } else {
-      return res.status(401).send("Old password is incorrect.");
+      return res.status(400).send("Old password is incorrect.");
     }
-  });
+  } catch (err) {
+    return res.status(500).send("Password change failed.");
+  }
 });
 
 module.exports = router;

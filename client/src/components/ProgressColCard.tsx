@@ -21,7 +21,7 @@ const ProgressColCard: React.FC<
   return (
     <div
       ref={setNodeRef}
-      className="group cursor-grab rounded-lg bg-neutral-950 p-4 shadow-sm hover:shadow-md border border-transparent hover:bg-neutral-900 hover:border-teal-400 transition-all duration-200"
+      className="touch-none group cursor-grab rounded-lg bg-neutral-950 p-4 shadow-sm hover:shadow-md border border-transparent hover:bg-neutral-900 hover:border-teal-400 transition-all duration-200"
       style={style}
     >
       <div

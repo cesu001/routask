@@ -59,7 +59,11 @@ const Progress = () => {
   const [activeID, setActiveID] = useState<string | null>(null);
   const sensor = useSensors(
     useSensor(PointerSensor, {
-      activationConstraint: { distance: 5 },
+      activationConstraint: {
+        distance: 5,
+        // delay: 150,
+        // tolerance: 5,
+      },
     }),
   );
   const handleDragStart = (event: DragStartEvent) => {
