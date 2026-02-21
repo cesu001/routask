@@ -1,3 +1,4 @@
+````markdown
 # **Routask-行事曆與任務管理系統**
 ### Routask 是一個MERN Full Stack專案。本專案透過Zustand全域狀態管理，實現了會員系統、任務管理等功能在前端與後端、資料庫的資料即時同步。
 ### 展示影片連結：https://reurl.cc/NNWLrq
@@ -59,3 +60,29 @@
   9. Command: ```node index.js``` in server folder.
   10. Command: ```npm run dev``` in client folder.
   11. Go http://localhost:5173 or http://yourIP:yourPort in browser.
+
+````
+
+## 開發指引（快速摘要）
+
+完整的開發指引已存放於 `.github/copilot-instructions.md`。以下為快速啟動與主要慣例：
+
+- 前端（client）：
+
+```bash
+cd client
+npm install
+npm run dev
+```
+
+- 後端（server）：
+
+```bash
+cd server
+npm install
+npm start
+```
+
+- 主要檔案與慣例：元件使用 PascalCase 並放在 `client/src/components/`；hook 放在 `client/src/hooks/`；服務（API）放在 `client/src/services/`；TypeScript 型別集中於 `client/types.ts`。
+
+更多開發規範、程式風格與流程請參閱 `.github/copilot-instructions.md`。

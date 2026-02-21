@@ -1,0 +1,26 @@
+{
+  "github.copilot.chat.commitMessageGeneration.instructions": [
+    {
+      "text": "請根據專案約定於 commit 標題最前方加入對應 emoji（feat→✨, fix→🐛, docs→📝, style→🎨, refactor→♻️, perf→⚡️, test→✅, chore→🔧, ci→🤖, build→📦, revert→⏪）。\n輸出格式：一行標題（必須）與可選的描述段落（body）。標題格式：{emoji} {type}: {subject}。\n若使用 scope，請保留在 type 後（例如：✨ feat(parser): 新增解析器）。\n不要包含額外教學或說明文字；僅輸出 commit 訊息內容。\n範例：\n✨ feat: 新增任務建立 API\n\n（如果需要，接著下一段為更詳細的變更描述）"
+    }
+  ],
+
+  // 本工作區的 commit message 撰寫風格設定（僅供參考 / 團隊約定）
+  "routask.commitMessageStyle": {
+    "description": "Commit message emoji mapping for team convention",
+    "map": {
+      "feat": "✨",
+      "fix": "🐛",
+      "docs": "📝",
+      "style": "🎨",
+      "refactor": "♻️",
+      "perf": "⚡️",
+      "test": "✅",
+      "chore": "🔧",
+      "ci": "🤖",
+      "build": "📦",
+      "revert": "⏪"
+    },
+    "template": "${emoji} ${type}: ${subject}"
+  }
+}
