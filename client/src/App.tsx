@@ -1,5 +1,5 @@
-import React, { useEffect } from "react";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { useEffect } from "react";
+import { Routes, Route } from "react-router-dom";
 import Index from "./components/Index";
 import Login from "./components/Login";
 import Register from "./components/Register";
@@ -9,7 +9,7 @@ import TaskIndex from "./components/TaskIndex";
 import Profile from "./components/Profile";
 import { useAuthStore } from "./store";
 import AuthService from "./services/auth.service";
-import ScrollToTop from "./components/ScrollToTop";
+import useScrollToTop from "./hooks/useScrollToTop";
 
 const App = () => {
   const setCurrentUser = () => {
@@ -18,22 +18,20 @@ const App = () => {
   useEffect(() => {
     setCurrentUser();
   }, []);
+  useScrollToTop();
   return (
-    <BrowserRouter>
-      <ScrollToTop />
-      <Routes>
-        <Route path="/" element={<Index />}></Route>
-        <Route path="/login" element={<Login />}></Route>
-        <Route path="/register" element={<Register />}></Route>
-        <Route path="/reset" element={<ResetPassword />}></Route>
-        <Route
-          path="/reset-password/:_id/:token"
-          element={<ResetPasswordNew />}
-        ></Route>
-        <Route path="/index" element={<TaskIndex />}></Route>
-        <Route path="/profile" element={<Profile />}></Route>
-      </Routes>
-    </BrowserRouter>
+    <Routes>
+      <Route path="/" element={<Index />}></Route>
+      <Route path="/login" element={<Login />}></Route>
+      <Route path="/register" element={<Register />}></Route>
+      <Route path="/reset" element={<ResetPassword />}></Route>
+      <Route
+        path="/reset-password/:_id/:token"
+        element={<ResetPasswordNew />}
+      ></Route>
+      <Route path="/index" element={<TaskIndex />}></Route>
+      <Route path="/profile" element={<Profile />}></Route>
+    </Routes>
   );
 };
 

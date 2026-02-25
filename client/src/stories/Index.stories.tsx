@@ -63,4 +63,3 @@ export const LoggedIn: Story = {
     },
   ],
 };
-export const Default: Story = {};

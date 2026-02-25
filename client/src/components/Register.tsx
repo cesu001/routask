@@ -115,7 +115,7 @@ const Register = () => {
           <img src={LogoBlack} alt="logoblack" className="h-20 lg:h-24 mt-5" />
           <div className="flex justify-center flex-col gap-9 w-3/4 h-72">
             <div className="flex justify-center items-center gap-5">
-              <div className="flex items-center border-2 rounded-full px-4 py-2 gap-1">
+              <div className="w-full flex items-center border-2 rounded-full px-4 py-2 gap-1">
                 <FaUser />
                 <input
                   type="text"
@@ -125,7 +125,7 @@ const Register = () => {
                   onChange={handleFNameChange}
                 />
               </div>
-              <div className="flex items-center border-2 rounded-full px-4 py-2 gap-1">
+              <div className="w-full flex items-center border-2 rounded-full px-4 py-2 gap-1">
                 <FaUser />
                 <input
                   type="text"
