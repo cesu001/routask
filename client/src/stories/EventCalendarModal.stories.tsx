@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import EventCalendarModal from "../components/EventCalendarModal";
+import { useTaskStore } from "../store";
 
 const meta: Meta<typeof EventCalendarModal> = {
   title: "Components/EventCalendarModal",
@@ -20,6 +21,16 @@ const meta: Meta<typeof EventCalendarModal> = {
   },
   decorators: [
     (Story) => {
+      useTaskStore.setState({
+        calendars: [
+          {
+            _id: "calendar-id-123",
+            title: "Work",
+            owner: "mock-id-123",
+            tasks: [],
+          },
+        ],
+      });
       if (!document.getElementById("cmodal-root")) {
         const modalRoot = document.createElement("div");
         modalRoot.setAttribute("id", "cmodal-root");
