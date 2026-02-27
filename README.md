@@ -80,6 +80,33 @@
 10. Command: `npm run dev` in client folder.
 11. Go http://localhost:5173 or http://yourIP:yourPort in browser.
 
+## **Storybook（組件開發與檢視）**
+
+![Storybook Preview](./client/docs/storybook_docs.png)
+
+- 確認已在 `client` 安裝專案相依（若尚未執行）：
+
+```bash
+cd client
+npm install
+```
+
+- 啟動本地 Storybook（預設在 `6006` 埠）：
+
+```bash
+cd client
+npm run storybook
+```
+
+- 開啟瀏覽器並前往： http://localhost:6006
+
+- 建置靜態 Storybook（用於部署或分享）：
+
+```bash
+cd client
+npm run build-storybook
+```
+
 ## **開發指引（快速摘要）**
 
 完整的開發指引已存放於 `.github/copilot-instructions.md`。以下為快速啟動與主要慣例：
