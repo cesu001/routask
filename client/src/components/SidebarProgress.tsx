@@ -23,6 +23,7 @@ const SidebarProgress = () => {
         <h2>Progress</h2>
         <button
           onClick={toggleProgress}
+          aria-label="Toggle Progress"
           className={`${
             isProgressOpen ? "transform rotate-180" : "transform rotate-0"
           } self-center  transition-transform duration-300`}
@@ -42,7 +43,7 @@ const SidebarProgress = () => {
             key={progress}
             onClick={() => selectProgress(progress.toLowerCase())}
             className={getBtnClass(
-              selectedProgress.includes(progress.toLowerCase())
+              selectedProgress.includes(progress.toLowerCase()),
             )}
           >
             {progress}

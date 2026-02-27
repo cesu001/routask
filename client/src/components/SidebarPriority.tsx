@@ -22,6 +22,7 @@ const SidebarPriority = () => {
       <div className="mt-4 text-white text-2xl font-semibold border-b-2 border-teal-600 px-4 py-2 flex justify-between">
         <h2>Priority</h2>
         <button
+          aria-label="Toggle Priority"
           onClick={togglePriority}
           className={`${
             isPriorityOpen ? "transform rotate-180" : "transform rotate-0"
@@ -46,7 +47,7 @@ const SidebarPriority = () => {
             key={p.label}
             onClick={() => selectPriority(p.label.toLowerCase())}
             className={getBtnClass(
-              selectedPriority.includes(p.label.toLowerCase())
+              selectedPriority.includes(p.label.toLowerCase()),
             )}
           >
             {p.label}

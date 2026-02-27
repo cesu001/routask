@@ -127,6 +127,7 @@ const SidebarCalendar = () => {
       <div className="mt-10 text-white text-2xl font-semibold border-b-2 border-teal-600 px-4 py-2 flex justify-between">
         <h2>Calendars</h2>
         <button
+          aria-label="Toggle Calendar"
           onClick={toggleCalendar}
           className={`${
             isCalendarOpen ? "transform rotate-180" : "transform rotate-0"
