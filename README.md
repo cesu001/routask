@@ -82,6 +82,8 @@
 
 ## **Storybook（組件開發與檢視）**
 
+👉 [查看Storybook](https://routask-storybook.vercel.app/)
+
 ![Storybook Preview](./client/docs/storybook_docs.png)
 
 - 確認已在 `client` 安裝專案相依（若尚未執行）：
