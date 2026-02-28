@@ -12,7 +12,10 @@ require("./config/passport")(passport);
 const clientOrigin = process.env.CLIENT_ORIGIN;
 
 mongoose
-  .connect(process.env.MONGO_URI)
+  .connect(process.env.MONGO_URI, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+  })
   .then(() => {
     console.log("Connected to MongoDB");
   })
@@ -45,7 +48,8 @@ app.use(
   taskRoute,
 );
 
-app.listen(8080, () => {
-  console.log("Server is running on port 8080");
+const PORT = process.env.PORT || 8080;
+app.listen(PORT, () => {
+  console.log(`Server is running on port ${PORT}`);
   console.log(`CORS allowed for: ${clientOrigin}`);
 });
