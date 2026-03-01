@@ -32,6 +32,7 @@ const NavLinks: React.FC<{ closeMenu: () => void }> = ({ closeMenu }) => {
       </a>
       <a
         href="#feature"
+        onClick={(e) => handleScroll(e, "overview")}
         className="w-32 mx-1 hover:scale-110 hover:bg-gray-300 hover:text-black px-4 py-2 rounded-md transition delay-50 duration-300 ease-in-out"
       >
         Feature
