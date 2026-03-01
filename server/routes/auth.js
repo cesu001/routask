@@ -12,6 +12,8 @@ const dotenv = require("dotenv");
 dotenv.config();
 let nodemailer = require("nodemailer");
 const mongoose = require("mongoose");
+const dns = require("dns");
+dns.setDefaultResultOrder("ipv4first");
 
 router.use((req, res, next) => {
   console.log("Auth route accessed");
@@ -113,15 +115,11 @@ router.post("/forgot-password", async (req, res) => {
     // nodemailer
     let transporter = nodemailer.createTransport({
       host: "smtp.gmail.com",
-      port: 587,
-      secure: false,
+      port: 465,
+      secure: true,
       auth: {
         user: process.env.EMAIL_USER,
         pass: process.env.EMAIL_PASS,
-      },
-      tls: {
-        rejectUnauthorized: false,
-        minVersion: "TLSv1.2",
       },
       connectionTimeout: 10000,
     });
