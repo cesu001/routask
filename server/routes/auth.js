@@ -102,33 +102,36 @@ router.post("/forgot-password", async (req, res) => {
     const token = jwt.sign(
       { email: foundUser.email, _id: foundUser._id },
       secret,
-      { expiresIn: "5m" },
+      { expiresIn: "10m" },
     );
-    const link = `http://localhost:5173/reset-password/${foundUser._id}/${token}`;
+    const clientUrl =
+      process.env.NODE_ENV === "production"
+        ? "https://routask.vercel.app"
+        : "http://localhost:5173";
+
+    const link = `${clientUrl}/reset-password/${foundUser._id}/${token}`;
     // nodemailer
     let transporter = nodemailer.createTransport({
       service: "gmail",
       auth: {
-        user: "routask2025@gmail.com",
-        pass: "oajtheecbrzcfean",
+        user: process.env.EMAIL_USER,
+        pass: process.env.EMAIL_PASS,
       },
     });
     let mailOptions = {
-      from: "routask2025@gmail.com",
+      from: `"Routask Support" <${process.env.EMAIL_USER}>`,
       to: foundUser.email,
-      subject: "Password Reset",
-      text: link,
+      subject: "Password Reset Request",
+      html: `<p>You requested a password reset. Click the link below to proceed:</p>
+             <a href="${link}">${link}</a>
+             <p>This link will expire in 10 minutes.</p>`,
     };
-    transporter.sendMail(mailOptions, function (error, info) {
-      if (error) {
-        console.log(error);
-      } else {
-        console.log("Email sent: " + info.response);
-      }
-    });
+    await transporter.sendMail(mailOptions);
+    console.log("Email sent successfully to: " + foundUser.email);
     return res.send({ message: "Password reset link sent to your email." });
   } catch (err) {
-    return res.status(500).send("Something went wrong.");
+    console.error("Forgot Password Error:", err);
+    return res.status(500).send("Internal server error.");
   }
 });
 

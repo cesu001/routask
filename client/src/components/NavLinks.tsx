@@ -1,21 +1,31 @@
 import { Link } from "react-router-dom";
 import { useAuthStore } from "../store";
+import type React from "react";
 
 const NavLinks: React.FC<{ closeMenu: () => void }> = ({ closeMenu }) => {
   const currentUser = useAuthStore((state) => {
     return state.currentUser;
   });
+  const handleScroll = (e: React.MouseEvent<HTMLAnchorElement>, id: string) => {
+    e.preventDefault();
+    const element = document.getElementById(id);
+    if (element) {
+      element.scrollIntoView({ behavior: "smooth" });
+      closeMenu();
+    }
+  };
   return (
     <>
       <a
         href="#top"
+        onClick={(e) => handleScroll(e, "top")}
         className="w-32 mx-1 hover:scale-110 hover:bg-gray-300 hover:text-black px-4 py-2 rounded-md transition delay-50 duration-300 ease-in-out"
       >
         Home
       </a>
       <a
         href="#overview"
-        onClick={closeMenu}
+        onClick={(e) => handleScroll(e, "overview")}
         className="w-32 mx-1 hover:scale-110 hover:bg-gray-300 hover:text-black px-4 py-2 rounded-md transition delay-50 duration-300 ease-in-out"
       >
         Overview

@@ -14,9 +14,9 @@ const Nav = () => {
   }, [setIsOpen]);
   return (
     <div className="bg-gray-950 text-white w-full h-[10vh] sticky top-0 z-20 flex justify-between shadow-2xl">
-      <div className="min-w-64 h-full ml-5 p-4">
+      <div className="max-w-[250px] h-full ml-5 p-4">
         <Link to="/">
-          <img src={Logo} alt="logo" className="object-cover h-full" />
+          <img src={Logo} alt="logo" className="object-contain h-full" />
         </Link>
       </div>
       <nav className="hidden h-full lg:flex justify-around items-center font-semibold text-center text-2xl mx-5 gap-3">

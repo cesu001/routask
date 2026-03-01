@@ -10,16 +10,16 @@ const Footer = () => {
   return (
     <div className="h-32 bg-neutral-800 flex flex-col text-white gap-2">
       <div className="flex justify-center items-center mt-4 gap-5">
-        <Link to="https://www.facebook.com/">
+        <Link to="https://www.facebook.com/" target="blank">
           <FaFacebook size={24} />
         </Link>
-        <Link to="https://www.instagram.com/">
+        <Link to="https://www.instagram.com/" target="blank">
           <FaInstagram size={24} />
         </Link>
-        <Link to="https://twitter.com/">
+        <Link to="https://twitter.com/" target="blank">
           <FaSquareXTwitter size={24} />
         </Link>
-        <Link to="https://www.youtube.com/">
+        <Link to="https://www.youtube.com/" target="blank">
           <FaYoutube size={24} />
         </Link>
       </div>
