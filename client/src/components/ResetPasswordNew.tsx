@@ -144,14 +144,10 @@ const ResetPasswordNew = () => {
       <div className="h-[90vh] flex justify-center items-center">
         <form
           onSubmit={handleResetPassword}
-          className="p-5 lg:p-2 w-96 h-128 lg:w-120 lg:h-156 max-w-[90vw] border-2 border-gray-400 rounded-xl shadow-xl flex flex-col justify-around items-center gap-3 lg:gap-10"
+          className="p-5 lg:p-2 w-96 lg:w-120 max-w-[90vw] border-2 border-gray-400 rounded-xl shadow-xl flex flex-col justify-around items-center gap-10"
         >
-          <img
-            src={LogoBlack}
-            alt="logoblack"
-            className="h-20 lg:h-24 mt-2 lg:mt-5"
-          />
-          <div className="flex justify-around flex-col gap-5 lg:gap-9 w-3/4 h-72">
+          <img src={LogoBlack} alt="logoblack" className="h-16 lg:h-24 mt-5" />
+          <div className="flex justify-around flex-col gap-15 w-3/4">
             <div className="flex items-center border-2 rounded-full px-4 py-2 gap-1">
               <MdEmail />
               <input
@@ -191,7 +187,7 @@ const ResetPasswordNew = () => {
               </div>
             </div>
           </div>
-          <div className="h-60 flex flex-col items-center gap-6">
+          <div className="w-full flex flex-col items-center gap-10 pb-6">
             <button
               type="submit"
               disabled={isLoading}
