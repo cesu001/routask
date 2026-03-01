@@ -7,13 +7,13 @@ const BackButton = () => {
     navigate("/");
   };
   return (
-    <div className="h-[10vh]">
+    <div className="h-[10vh] p-2">
       <button
         onClick={handleBack}
-        className="mx-3 my-3 px-4 py-2 flex items-center border-2 rounded-lg shadow-lg text-gray-900 hover:text-white hover:bg-gray-400 transition-colors duration-300"
+        className="px-3 py-1.5 text-xs lg:px-4 lg:py-2 lg:text-xl flex items-center border-2 rounded-lg shadow-lg text-gray-900 hover:text-white hover:bg-gray-400 transition-colors duration-300"
       >
-        <FaArrowLeft size={30} />
-        <span className="text-2xl align-middle ml-2 font-semibold">Back</span>
+        <FaArrowLeft className="text-sm lg:text-xl" />
+        <span className="align-middle ml-1 font-semibold">Back</span>
       </button>
     </div>
   );

@@ -52,14 +52,14 @@ const EventCalendar = () => {
   const modalDateKey = dayOpen ? format(dayOpen, "yyyy-MM-dd") : "";
   const selectedTasks = tasksByDate[modalDateKey] || [];
   return (
-    <div className="h-full overflow-hidden p-5 flex flex-col">
+    <div className="h-full overflow-hidden p-1 lg:p-5 flex flex-col">
       <EventCalendarModal
         dayOpen={dayOpen}
         isCModalOpen={isCModalOpen}
         toggleCModal={toggleCModal}
         selectedTasks={selectedTasks}
       />
-      <div className="grid grid-cols-3 items-center gap-3">
+      <div className="grid grid-cols-3 items-center gap-1 lg:gap-3">
         <div className="flex justify-end">
           <button
             onClick={handlePrevMonth}
@@ -68,7 +68,7 @@ const EventCalendar = () => {
             <FaCaretLeft size={24} />
           </button>
         </div>
-        <h2 className="text-2xl font-bold text-center">
+        <h2 className="text-sm lg:text-2xl font-bold text-center">
           {format(viewDate, "MMMM yyyy")}
         </h2>
         <div className="flex justify-start">

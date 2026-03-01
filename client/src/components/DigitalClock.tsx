@@ -22,10 +22,10 @@ const DigitalClock = () => {
   }, [time]);
 
   return (
-    <div className="mx-1 text-3xl font-semibold flex flex-wrap justify-center sm:justify-start md:justify-start">
+    <div className="mx-1 text-lg lg:text-3xl font-semibold flex flex-wrap justify-center lg:justify-start gap-2 lg:gap-4">
       <div className="px-4 py-2">{dateStr}</div>
       <div className="flex tabular-nums">
-        <div className="px-4 py-2 w-[132px]">{timeStr}</div>
+        <div className="px-4 py-2 w-[90px] lg:w-[132px]">{timeStr}</div>
         <div className="px-4 py-2">{meridian}</div>
       </div>
     </div>

@@ -269,8 +269,8 @@ const TaskModal: React.FC<TaskModalProps> = ({
               </select>
             </div>
             {/* date & time */}
-            <div className="flex gap-4">
-              <div className="flex-1 border-2 rounded-xl px-4 py-2">
+            <div className="flex gap-2">
+              <div className="flex-1 min-w-0 border-2 rounded-xl px-4 py-2">
                 <label className="text-xs text-gray-400 block">Date</label>
                 <input
                   value={formDateStr}
@@ -279,7 +279,7 @@ const TaskModal: React.FC<TaskModalProps> = ({
                   className="bg-transparent outline-none w-full text-lg"
                 />
               </div>
-              <div className="flex-1 border-2 rounded-xl px-4 py-2">
+              <div className="flex-1 min-w-0 border-2 rounded-xl px-4 py-2">
                 <label className="text-xs text-gray-400 block">Time</label>
                 <input
                   value={formTimeStr}
@@ -290,8 +290,8 @@ const TaskModal: React.FC<TaskModalProps> = ({
               </div>
             </div>
             {/* priority & progress */}
-            <div className="flex gap-4">
-              <div className="flex-1 border-2 rounded-xl px-4 py-2">
+            <div className="flex gap-2">
+              <div className="flex-1 min-w-0 border-2 rounded-xl px-4 py-2">
                 <label className="text-xs text-gray-400 block">Priority</label>
                 <select
                   value={formPriority}
@@ -303,7 +303,7 @@ const TaskModal: React.FC<TaskModalProps> = ({
                   <option value="high">High</option>
                 </select>
               </div>
-              <div className="flex-1 border-2 rounded-xl px-4 py-2">
+              <div className="flex-1 min-w-0 border-2 rounded-xl px-4 py-2">
                 <label className="text-xs text-gray-400 block">Progress</label>
                 <select
                   value={formProgress}

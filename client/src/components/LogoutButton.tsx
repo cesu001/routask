@@ -12,10 +12,10 @@ const LogoutButton = () => {
     }
   };
   return (
-    <div className="h-16 absolute top-0 right-0 p-2 md:p-3">
+    <div className="h-16 absolute top-0 right-0 p-2">
       <button
         onClick={handleLogout}
-        className="px-3 py-1.5 text-sm lg:px-4 lg:py-2 lg:text-xl font-semibold border-2 rounded-lg shadow-lg text-gray-900 hover:text-white hover:bg-gray-400 transition-colors duration-300"
+        className="px-3 py-1.5 text-xs lg:px-4 lg:py-2 lg:text-xl font-semibold border-2 rounded-lg shadow-lg text-gray-900 hover:text-white hover:bg-gray-400 transition-colors duration-300"
       >
         <span>Log Out</span>
       </button>

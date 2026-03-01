@@ -105,10 +105,10 @@ const Progress = () => {
     }
   };
   return (
-    <div className="h-full flex flex-col p-4 gap-2">
+    <div className="h-full flex flex-col p-1 lg:p-4 gap-2">
       <button
         onClick={() => setSortOrder(sortOrder === "asc" ? "desc" : "asc")}
-        className="min-w-[156px] w-1/8 flex items-center gap-4 px-4 py-2 bg-neutral-900 text-teal-600 border-2 border-neutral-600 rounded-lg hover:bg-neutral-800 hover:border-teal-600 transition-colors"
+        className="min-w-[156px] w-1/8 flex items-center gap-4 px-4 py-2 text-sm lg:text-lg bg-neutral-900 text-teal-600 border-2 border-neutral-600 rounded-lg hover:bg-neutral-800 hover:border-teal-600 transition-colors"
       >
         {sortOrder === "asc" ? (
           <>

@@ -109,7 +109,7 @@ const TaskIndex = () => {
           <FaBars size={24} />
         </button>
       </div>
-      <div className="flex w-screen h-screen overflow-hidden">
+      <div className="flex w-full h-screen">
         <Sidebar isOpen={isSidebarOpen} onClose={handleSidebarClose} />
         <div className="flex-1">
           <TaskMain />

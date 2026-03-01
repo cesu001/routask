@@ -59,29 +59,29 @@ const TaskMain = () => {
     ).length;
   }, [tasks]);
   return (
-    <div className="w-full h-screen flex flex-col">
+    <div className="w-full h-full flex flex-col gap-1 lg:gap-4">
       <TaskModal
         currentTask={editingTask}
         isModalOpen={isModalOpen}
         toggleModal={toggleModal}
       />
       <LogoutButton />
-      <h1 className="text-5xl font-bold m-5 text-center lg:text-left">
+      <h1 className="text-xl md:text-3xl lg:text-5xl font-bold mx-5 mt-3 mb-0 text-center lg:text-left">
         Hi, {currentUser?.user.fName} !
       </h1>
       <DigitalClock />
-      <div className="mx-5 my-3 text-2xl font-semibold text-center sm:text-left">
+      <div className="mx-5 text-lg lg:text-2xl font-semibold text-center lg:text-left">
         <span>You have {todayTaskCount} tasks today.</span>
       </div>
       <button
         onClick={handleNewTask}
-        className="w-[156px] self-center lg:self-start mx-5 my-3 px-4 py-2 rounded-xl border-2 font-semibold text-xl hover:bg-teal-600 hover:text-white hover:cursor-pointer transition-colors duration-300"
+        className="w-auto lg:w-[156px] self-center lg:self-start mx-5 my-1 px-2 py-1 lg:px-4 lg:py-2 rounded-xl border-2 font-semibold text-sm lg:text-xl hover:bg-teal-600 hover:text-white hover:cursor-pointer transition-colors duration-300"
       >
-        <FaPlus className="inline mb-1 mr-2" />
+        <FaPlus className="inline mb-1 mr-2" size={18} />
         New Task
       </button>
-      <section className="flex flex-1 flex-col min-h-0">
-        <div className="flex justify-center sm:justify-start gap-10 m-2 text-xl font-medium text-black border-b-2 border-gray-400">
+      <section className="flex flex-1 flex-col w-full min-h-0">
+        <div className="flex justify-center lg:justify-start gap-10 mx-2 text-sm sm:text-xl font-medium text-black border-b-2 border-gray-400">
           <button
             onClick={toggleTaskList}
             className={`px-4 py-2 ${

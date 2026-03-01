@@ -53,8 +53,8 @@ const TaskList = () => {
   }, [showArchived]);
   return (
     <div className="mt-2 flex flex-col h-full bg-neutral-700">
-      <div className="flex flex-wrap m-1 px-2 pb-3 gap-4 items-center min-w-[200px] border-b-2 border-teal-600">
-        <div className="relative rounded-xl text-neutral-400">
+      <div className="flex m-1 px-2 pb-3 gap-1 lg:gap-4 justify-between lg:justify-start items-center min-w-[200px] text-sm lg:text-lg border-b-2 border-teal-600">
+        <div className="flex-1 max-w-sm lg:max-w-md relative rounded-xl text-neutral-400">
           <FaSearch
             size={20}
             className="absolute left-2 top-1/2 -translate-y-1/2"
@@ -64,12 +64,12 @@ const TaskList = () => {
             value={searchQuery}
             placeholder="Search tasks..."
             onChange={handleSearchChange}
-            className="w-full rounded-lg text-white bg-neutral-900 border-neutral-600 border-2 pl-8 py-2 pr-4 text-lg focus:outline-none focus:border-teal-600"
+            className="w-full rounded-lg text-white bg-neutral-900 border-neutral-600 border-2 pl-8 py-2 pr-4 focus:outline-none focus:border-teal-600"
           />
         </div>
         <button
           onClick={() => setSortOrder(sortOrder === "asc" ? "desc" : "asc")}
-          className="flex items-center gap-2 px-4 py-2 bg-neutral-900 text-teal-600 border-2 border-neutral-600 rounded-lg hover:bg-neutral-800 hover:border-teal-600 transition-colors"
+          className="flex shrink-0 items-center gap-2 px-4 py-2 bg-neutral-900 text-teal-600 border-2 border-neutral-600 rounded-lg hover:bg-neutral-800 hover:border-teal-600 transition-colors"
         >
           {sortOrder === "asc" ? (
             <>
