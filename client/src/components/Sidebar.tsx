@@ -14,7 +14,7 @@ const Sidebar: React.FC<{ isOpen: boolean; onClose: () => void }> = ({
   const setShowArchived = useTaskStore((state) => state.setShowArchived);
   return (
     <div
-      className={`w-screen h-screen bg-gray-950 px-4 py-2 flex flex-col overflow-y-auto lg:w-64 lg:static lg:translate-x-0
+      className={`w-full h-screen bg-gray-950 px-4 py-2 flex flex-col overflow-y-auto lg:w-64 lg:static lg:translate-x-0
       fixed top-0 left-0 z-50 transform transition-transform duration-500 ease-in-out
       ${isOpen ? "translate-x-0" : "-translate-x-full"}
       `}

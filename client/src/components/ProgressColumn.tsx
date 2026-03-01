@@ -13,16 +13,16 @@ const ProgressColumn: React.FC<ProgressColumnProps> = ({
   });
   return (
     <div
-      className={`w-full lg:h-full lg:max-h-none min-h-[300px] max-h-[500px] p-4 flex flex-col rounded-lg transition-colors duration-300 ${
+      className={`w-full lg:h-full lg:max-h-none min-h-[300px] max-h-[500px] p-1 lg:p-4 flex flex-col rounded-lg transition-colors duration-300 ${
         isOver ? "bg-neutral-700 border-2 border-teal-600" : "bg-neutral-800"
       }`}
     >
-      <h2 className="font-bold text-2xl text-white text-center mb-2 flex-shrink-0">
+      <h2 className="font-bold text-2xl text-white text-center mb-1 lg:mb-2 flex-shrink-0">
         {column.title}
       </h2>
       <div
         ref={setNodeRef}
-        className="flex-1 overflow-y-auto space-y-2 p-2 custom-scrollbar"
+        className="flex-1 overflow-y-auto space-y-6 lg:space-y-2 p-2 custom-scrollbar"
       >
         {tasks.length > 0 ? (
           tasks.map((task) => {

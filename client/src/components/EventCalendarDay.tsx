@@ -23,12 +23,12 @@ const EventCalendarDay: React.FC<EventCalendarDayProps> = ({
               isTodayDate
                 ? "bg-blue-300/80 border-teal-600 text-neutral-900"
                 : isCurrentMonth
-                ? "bg-neutral-800 border-teal-600 text-white hover:bg-teal-400"
-                : "bg-neutral-800/50 border-neutral-600/80 text-neutral-500"
+                  ? "bg-neutral-800 border-teal-600 text-white hover:bg-teal-400"
+                  : "bg-neutral-800/50 border-neutral-600/80 text-neutral-500"
             }
             `}
     >
-      <span>{format(day, "d")}</span>
+      <span className="text-xs md:text-lg lg:text-xl">{format(day, "d")}</span>
       <div className="overflow-hidden flex flex-col gap-1 flex-1">
         {dayTasks.slice(0, 2).map((task) => {
           const priorityKey = (task.priority?.toLowerCase() ||
@@ -38,7 +38,7 @@ const EventCalendarDay: React.FC<EventCalendarDayProps> = ({
           return (
             <div
               key={task._id}
-              className={`text-[10px] leading-tight bg-neutral-700/50 rounded px-1 py-0.5 truncate text-left border-l-2 ${priorityStyle}`}
+              className={`text-[5px] lg:text-[10px] leading-tight bg-neutral-700/50 rounded px-0.5 py-0 lg:px-1 lg:py-0.5 truncate text-left border-l-2 ${priorityStyle}`}
             >
               {task.title}
             </div>
@@ -47,7 +47,7 @@ const EventCalendarDay: React.FC<EventCalendarDayProps> = ({
       </div>
       {dayTasksLength > 2 && (
         <div className="w-full rounded-b-md flex justify-center mt-auto bg-neutral-800/50">
-          <BsThreeDots size={12} />
+          <BsThreeDots className="text-[5px] md:text-base lg:text-xl" />
         </div>
       )}
     </div>

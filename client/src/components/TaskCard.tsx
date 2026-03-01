@@ -29,7 +29,7 @@ const TaskCard: React.FC<TaskCardProps> = ({
       className="card-pop-in h-fit px-5 py-3 flex flex-col rounded-xl bg-neutral-900 shadow-lg border-2 border-neutral-500 cursor-pointer hover:border-teal-400 hover:scale-105 transition-all duration-200"
     >
       {/* title & calendar */}
-      <div className="flex justify-between items-center text-xl font-medium text-teal-600 border-b-2 border-b-teal-600 mb-3 pb-2">
+      <div className="flex justify-between items-center text-sm lg:text-xl font-medium text-teal-600 border-b-2 border-b-teal-600 mb-3 pb-2">
         <div>{task.title}</div>
         <div className="w-1/3 border-1 rounded-xl text-neutral-200 border-neutral-200 px-3 py-1 overflow-hidden">
           {calendarTitle}
@@ -39,42 +39,32 @@ const TaskCard: React.FC<TaskCardProps> = ({
       <div className="flex justify-between items-center text-neutral-200 border-neutral-200 gap-2 mb-2">
         <div className="w-1/2 border-1 rounded-xl px-3 py-1 overflow-hidden">
           <label className="font-light text-xs block">Date</label>
-          <input
-            type="date"
-            value={localDateStr}
-            disabled
-            className="font-normal text-lg"
-          />
+          <div className="font-normal text-sm lg:text-xl truncate">
+            {localDateStr}
+          </div>
         </div>
         <div className="w-1/2 border-1 rounded-xl px-3 py-1 overflow-hidden">
           <label className="font-light text-xs block">Time</label>
-          <input
-            type="time"
-            value={localTimeStr}
-            disabled
-            className="font-normal text-lg"
-          />
+          <div className="font-normal text-sm lg:text-xl truncate">
+            {localTimeStr}
+          </div>
         </div>
       </div>
       {/* priority & progress */}
       <div className="flex justify-between items-center text-neutral-200 border-neutral-200 gap-2 mb-2">
         <div className="w-1/2 border-1 rounded-xl px-3 py-1 overflow-hidden">
           <label className="font-light text-xs block">Priority</label>
-          <input
-            type="text"
-            value={task.priority}
-            disabled
-            className={`font-normal text-lg capitalize ${priorityColor}`}
-          />
+          <div
+            className={`font-normal text-sm lg:text-lg capitalize truncate ${priorityColor}`}
+          >
+            {task.priority}
+          </div>
         </div>
         <div className="w-1/2 border-1 rounded-xl px-3 py-1 overflow-hidden">
           <label className="font-light text-xs block">Progress</label>
-          <input
-            type="text"
-            value={task.progress}
-            disabled
-            className="font-normal text-lg capitalize"
-          />
+          <div className="font-normal text-sm lg:text-lg capitalize truncate">
+            {task.progress}
+          </div>
         </div>
       </div>
     </div>

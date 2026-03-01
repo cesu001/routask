@@ -61,7 +61,7 @@ const Profile = () => {
     }
   };
   // save password
-  const handelSavePassword = async (e: React.FormEvent) => {
+  const handleSavePassword = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!oldPassword || !newPassword || !checkNewPassword) {
       setErrorMessage("Please fill in all password fields.");
@@ -204,15 +204,19 @@ const Profile = () => {
           </div>
         </div>
       )}
-      <div className="h-224 flex justify-center items-center">
-        <div className="h-172 w-120 border-2 border-gray-400 rounded-xl shadow-xl flex flex-col  items-center gap-2">
-          <img src={LogoBlack} alt="logoblack" className="h-20 my-5" />
+      <div className="min-h-[90vh] flex justify-center items-center py-5">
+        <div className="p-5 w-96 lg:w-120 max-w-[90vw] border-2 border-gray-400 rounded-xl shadow-xl flex flex-col  items-center gap-2">
           <form
             onSubmit={handleSaveInfo}
-            className="flex justify-center flex-col gap-6 w-3/4 h-60"
+            className="flex justify-center flex-col gap-3 lg:gap-6 w-3/4"
           >
-            <h2 className="text-xl font-semibold">Change Info :</h2>
-            <div className="flex justify-center items-center gap-5">
+            <img
+              src={LogoBlack}
+              alt="logoblack"
+              className="h-12 lg:h-24 mt-5 object-contain"
+            />
+            <h2 className="text-lg lg:text-xl font-semibold">Change Info :</h2>
+            <div className="flex flex-col lg:flex-row justify-center items-center gap-3 lg:gap-5">
               <div className="flex items-center border-2 rounded-full px-4 py-2 gap-1">
                 <FaUser />
                 <input
@@ -251,7 +255,7 @@ const Profile = () => {
             <div className="flex justify-center items-center">
               <button
                 type="submit"
-                className="w-1/3 px-4 py-2 text-2xl font-bold border-2 border-teal-600 rounded-xl hover:cursor-pointer hover:bg-teal-600 hover:text-white transition-colors duration-300"
+                className="w-1/2 lg:w-1/3 px-4 py-2 text-lg lg:text-2xl font-bold border-2 border-teal-600 rounded-xl hover:cursor-pointer hover:bg-teal-600 hover:text-white transition-colors duration-300"
               >
                 Save
               </button>
@@ -259,10 +263,12 @@ const Profile = () => {
           </form>
           <hr />
           <form
-            onSubmit={handelSavePassword}
-            className="w-3/4 h-60 flex flex-col gap-3"
+            onSubmit={handleSavePassword}
+            className="w-3/4 flex flex-col gap-3"
           >
-            <h2 className="text-xl font-semibold">Change Password :</h2>
+            <h2 className="text-lg lg:text-xl font-semibold">
+              Change Password :
+            </h2>
             <div className="flex items-center border-2 rounded-full px-4 py-2 gap-1">
               <RiLockPasswordFill />
               <input
@@ -299,7 +305,7 @@ const Profile = () => {
             <div className="flex justify-center items-center">
               <button
                 type="submit"
-                className="w-1/3 px-4 py-2 text-2xl font-bold border-2 border-teal-600 rounded-xl hover:cursor-pointer hover:bg-teal-600 hover:text-white transition-colors duration-300"
+                className="w-1/2 lg:w-1/3 px-4 py-2 text-lg lg:text-2xl font-bold border-2 border-teal-600 rounded-xl hover:cursor-pointer hover:bg-teal-600 hover:text-white transition-colors duration-300"
               >
                 Save
               </button>
