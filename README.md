@@ -2,7 +2,12 @@
 
 ### Routask 是一個MERN Full Stack專案。本專案透過Zustand全域狀態管理，實現了會員系統、任務管理等功能在前端與後端、資料庫的資料即時同步。
 
+### 網站連結：https://routask.vercel.app
+
 ### 展示影片連結：https://reurl.cc/NNWLrq
+
+![首頁展示](./client/docs/indexPic.png)
+![主要功能頁展示](./client/docs/taskPic.png)
 
 ## **技術架構**
 
@@ -65,6 +70,28 @@
     ├── validation.js    # Joi 表單驗證
     └── index.js         # 後端進入點 (連接 MongoDB 與初始化伺服器)
 ```
+
+## **部署(Deployment)**
+
+本專案採用前後端分離架構，並透過以下雲端平台達成自動化部署 (CI/CD)，確保系統的穩定性與擴展
+
+### **前端託管：[Vercel](https://vercel.com/)**
+
+- **框架優化：** 針對 React 與 Next.js 提供原生支援，確保最佳的渲染效能與加載速度。
+- **自動化 CI/CD：** 整合 GitHub，每次推送代碼後自動進行構建 (Build) 與部署，並產出預覽連結供即時測試。
+- **全球加速：** 透過 Vercel 的 Edge Network 節點，大幅降低全球使用者的訪問延遲。
+
+### **後端託管：[Render](https://render.com/)**
+
+- **穩定運行：** 提供完整的 Node.js 執行環境，適合處理 Express API 的高併發請求。
+- **環境管理：** 簡便的環境變數 (Environment Variables) 設定，確保資料庫連接字串與 API Key 的安全性。
+- **自動部署：** 監測 main 分支的更新，實現無縫代碼部署。
+
+### **資料庫：[MongoDB Atlas](https://www.mongodb.com/cloud/atlas)**
+
+- **雲端託管：** 無需自行維護伺服器，提供 99.9% 的高可用性與自動備份機制。
+- **安全性：** 透過 IP 白名單與進階加密技術，確保開發環境與生產環境的資料安全。
+- **彈性縮放：** 根據數據存取量自動調整資源，適合應對任務管理系統中頻繁的 CRUD 操作。
 
 ## **本地安裝與運行**
 
