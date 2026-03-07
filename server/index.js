@@ -7,6 +7,7 @@ dotenv.config();
 const authRoute = require("./routes").auth;
 const profileRoute = require("./routes").profile;
 const taskRoute = require("./routes").task;
+const chatRoute = require("./routes").chat;
 const passport = require("passport");
 require("./config/passport")(passport);
 const clientOrigin = process.env.CLIENT_ORIGIN;
@@ -47,6 +48,7 @@ app.use(
   passport.authenticate("jwt", { session: false }),
   taskRoute,
 );
+app.use("/api/chat", chatRoute);
 
 const PORT = process.env.PORT || 8080;
 app.listen(PORT, () => {

@@ -10,6 +10,7 @@ import Profile from "./components/Profile";
 import { useAuthStore } from "./store";
 import AuthService from "./services/auth.service";
 import useScrollToTop from "./hooks/useScrollToTop";
+import ChatBot from "./components/ChatBot";
 
 const App = () => {
   const setCurrentUser = () => {
@@ -31,6 +32,7 @@ const App = () => {
       ></Route>
       <Route path="/index" element={<TaskIndex />}></Route>
       <Route path="/profile" element={<Profile />}></Route>
+      <Route path="/chat" element={<ChatBot />}></Route>
     </Routes>
   );
 };
